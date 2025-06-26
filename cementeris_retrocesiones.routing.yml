@@ -1,0 +1,15 @@
+cementeris_retrocesiones.admin_retrocesiones:
+  path: '/admin/retrocesiones'
+  defaults:
+    _form: '\Drupal\cementeris_retrocesiones\Form\DateRangeForm'
+    _title: 'Retrocesiones admin'
+  requirements:
+    _permission: 'access content'
+
+cementeris_retrocesiones.retrocesiones:
+  path: '/tramite/retrocesiones'
+  defaults:
+    _form: '\Drupal\cementeris_retrocesiones\Form\RetrocesionesForm'
+    _title: 'Retrocesiones'
+  requirements:
+    _access: 'TRUE'
