@@ -1,14 +1,20 @@
 <?php
 
-use Drupal\taxonomy\Entity\Vocabulary;
-use Drupal\taxonomy\Entity\Term;
-use Drupal\field\Entity\FieldStorageConfig;
-use Drupal\field\Entity\FieldConfig;
-use Drupal\Core\Entity\Entity\EntityFormDisplay;
-
 /**
  * Implements hook_install().
  */
 function cementeris_retrocesiones_install() {
+  $module_path = drupal_get_path('module', 'cementeris_retrocesiones');
+  $languages = ['ca', 'es'];
 
+  foreach ($languages as $langcode) {
+    $po_file = DRUPAL_ROOT . "/$module_path/translations/$langcode.po";
+    if (file_exists($po_file)) {
+      $command = "drush locale:import $langcode $po_file -y";
+      // Ejecutar comando y capturar salida (opcional)
+      $output = shell_exec($command);
+      // Puedes registrar la salida si lo necesitas
+      \Drupal::logger('cementeris_retrocesiones')->notice("Importación de traducción $langcode: $output");
+    }
+  }
 }

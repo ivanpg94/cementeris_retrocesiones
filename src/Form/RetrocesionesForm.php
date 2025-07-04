@@ -777,7 +777,7 @@ class RetrocesionesForm extends ConfigFormBase {
     // NIF/NIE
     $form['nif'] = [
       '#type' => 'textfield',
-      '#title' => $this->t('NIF / NIE of the owner'),
+      '#title' => $this->t('NIF / NIE'),
       '#required' => TRUE,
     ];
 
@@ -812,19 +812,24 @@ class RetrocesionesForm extends ConfigFormBase {
     // Email
     $form['email'] = [
       '#type' => 'email',
-      '#title' => $this->t('Email address'),
+      '#title' => $this->t('Email'),
       '#required' => TRUE,
     ];
 
     // Accept data protection policy
     $form['acepta_politica'] = [
       '#type' => 'checkbox',
-      '#title' => $this->t('I have read and accept the CBSA data protection policy.'),
+      '#title' => $this->t('I have read and accept the CBSA data protection policy CBSA.'),
       '#required' => TRUE,
-      '#description' => $this->t('<a href=":url_ca" target="_blank">Catalan</a> | <a href=":url_es" target="_blank">Spanish</a>', [
-        ':url_ca' => 'https://cementiris.ajuntament.barcelona.cat/ca/avis-legal-i-privacitat',
-        ':url_es' => 'https://cementiris.ajuntament.barcelona.cat/es/avis-legal-i-privacitat',
-      ]),
+      '#description' => $this->t(
+        '<a href=":url_ca" target="_blank">@catalan</a> | <a href=":url_es" target="_blank">@spanish</a>',
+        [
+          ':url_ca' => 'https://cementiris.ajuntament.barcelona.cat/ca/avis-legal-i-privacitat',
+          ':url_es' => 'https://cementiris.ajuntament.barcelona.cat/es/avis-legal-i-privacitat',
+          '@catalan' => $this->t('Catalan'),
+          '@spanish' => $this->t('Spanish'),
+        ]
+      ),
     ];
 
     // Consent to notifications
@@ -853,7 +858,7 @@ class RetrocesionesForm extends ConfigFormBase {
     // --- NIF / DNI ----------------------------------------------------------
     $nif = $form_state->getValue('nif');
     if (!$this->isValidNif($nif)) {
-      $form_state->setErrorByName('nif', $this->t('El NIF/DNI introducido no es válido.'));
+      $form_state->setErrorByName('nif', $this->t('The NIF/DNI entered is not valid.'));
     }
 
     // --- e-mail -------------------------------------------------------------
@@ -861,25 +866,25 @@ class RetrocesionesForm extends ConfigFormBase {
     $email_validator = \Drupal::service('email.validator');
     $email = $form_state->getValue('email');
     if (!$email_validator->isValid($email)) {
-      $form_state->setErrorByName('email', $this->t('El correo electrónico no es válido.'));
+      $form_state->setErrorByName('email', $this->t('The email address is not valid.'));
     }
 
     // --- floor (número entero) ---------------------------------------------
     $floor = $form_state->getValue('floor');
     if ($floor !== '' && !ctype_digit((string) $floor)) {
-      $form_state->setErrorByName('floor', $this->t('«Piso» debe ser un número entero.'));
+      $form_state->setErrorByName('floor', $this->t('Floor must be an integer.'));
     }
 
     // --- number (número, entero o decimal) ---------------------------------
     $number = $form_state->getValue('number');
     if ($number !== '' && !is_numeric($number)) {
-      $form_state->setErrorByName('number', $this->t('«Número» debe ser un valor numérico.'));
+      $form_state->setErrorByName('number', $this->t('Number must be a numeric value.'));
     }
 
     // --- class (una sola letra) --------------------------------------------
     $class = $form_state->getValue('class');
     if ($class !== '' && !preg_match('/^[A-Za-z]$/', $class)) {
-      $form_state->setErrorByName('class', $this->t('«Clase» debe contener exactamente una letra.'));
+      $form_state->setErrorByName('class', $this->t('Class must contain exactly one letter.'));
     }
   }
 
@@ -1065,7 +1070,7 @@ class RetrocesionesForm extends ConfigFormBase {
     // TODO $CONTENT MUST CONTAIN SERVICE RESPONSE MESSAGE
 
     $response->addCommand(new OpenModalDialogCommand(
-      $this->t('Solicitud enviada'),
+      $this->t('Request sent'),
       $content,
       ['width' => '500']
     ));
