@@ -26,7 +26,7 @@ class RetrocesionesForm extends ConfigFormBase {
    * {@inheritdoc}
    */
   public function getFormId(): string {
-    return 'cementeris_retrocessions_date_range_form';
+    return 'cementeris_retrocessions_front';
   }
 
   /**
@@ -142,7 +142,7 @@ class RetrocesionesForm extends ConfigFormBase {
 
     $structure = $this->getEnclosuresByCemetery();
     $enclosures = $structure[$cemetery] ?? [];
-    $enclosures = ['' => $this->t('- Select an option -')] + $enclosures;
+    $enclosures = ['' => $this->t('Unnamed')] + $enclosures;
 
     // Update Enclosure
     $form['grave_code']['enclosure_wrapper']['enclosure']['#options'] = $enclosures;
@@ -150,17 +150,17 @@ class RetrocesionesForm extends ConfigFormBase {
     $form['grave_code']['enclosure_wrapper']['enclosure']['#default_value'] = '';
 
     // Clear Department
-    $form['grave_code']['department_wrapper']['department']['#options'] = ['' => $this->t('- Select an option -')];
+    $form['grave_code']['department_wrapper']['department']['#options'] = ['' => $this->t('Unnamed')];
     $form['grave_code']['department_wrapper']['department']['#value'] = '';
     $form['grave_code']['department_wrapper']['department']['#default_value'] = '';
 
     // Clear Way
-    $form['grave_code']['way_wrapper']['way']['#options'] = ['' => $this->t('- Select an option -')];
+    $form['grave_code']['way_wrapper']['way']['#options'] = ['' => $this->t('Unnamed')];
     $form['grave_code']['way_wrapper']['way']['#value'] = '';
     $form['grave_code']['way_wrapper']['way']['#default_value'] = '';
 
     // Clear Grouping
-    $form['grave_code']['grouping_wrapper']['grouping']['#options'] = ['' => $this->t('- Select an option -')];
+    $form['grave_code']['grouping_wrapper']['grouping']['#options'] = ['' => $this->t('Unnamed')];
     $form['grave_code']['grouping_wrapper']['grouping']['#value'] = '';
     $form['grave_code']['grouping_wrapper']['grouping']['#default_value'] = '';
 
@@ -264,9 +264,9 @@ class RetrocesionesForm extends ConfigFormBase {
     ksort($groupings);
 
     // Update options only, DO NOT clear selected values
-    $form['grave_code']['department_wrapper']['department']['#options'] = ['' => $this->t('- Select an option -')] + $departments;
-    $form['grave_code']['way_wrapper']['way']['#options'] = ['' => $this->t('- Select an option -')] + $ways;
-    $form['grave_code']['grouping_wrapper']['grouping']['#options'] = ['' => $this->t('- Select an option -')] + $groupings;
+    $form['grave_code']['department_wrapper']['department']['#options'] = ['' => $this->t('Unnamed')] + $departments;
+    $form['grave_code']['way_wrapper']['way']['#options'] = ['' => $this->t('Unnamed')] + $ways;
+    $form['grave_code']['grouping_wrapper']['grouping']['#options'] = ['' => $this->t('Unnamed')] + $groupings;
 
     $response = new AjaxResponse();
     $response->addCommand(new ReplaceCommand('#department-wrapper', $form['grave_code']['department_wrapper']));
@@ -353,9 +353,9 @@ class RetrocesionesForm extends ConfigFormBase {
     ksort($groupings);
 
     // Update options only (keep selected values)
-    $form['grave_code']['enclosure_wrapper']['enclosure']['#options'] = ['' => $this->t('- Select an option -')] + $enclosures;
-    $form['grave_code']['way_wrapper']['way']['#options'] = ['' => $this->t('- Select an option -')] + $ways;
-    $form['grave_code']['grouping_wrapper']['grouping']['#options'] = ['' => $this->t('- Select an option -')] + $groupings;
+    $form['grave_code']['enclosure_wrapper']['enclosure']['#options'] = ['' => $this->t('Unnamed')] + $enclosures;
+    $form['grave_code']['way_wrapper']['way']['#options'] = ['' => $this->t('Unnamed')] + $ways;
+    $form['grave_code']['grouping_wrapper']['grouping']['#options'] = ['' => $this->t('Unnamed')] + $groupings;
 
     $response = new AjaxResponse();
     $response->addCommand(new ReplaceCommand('#enclosure-wrapper', $form['grave_code']['enclosure_wrapper']));
@@ -450,9 +450,9 @@ class RetrocesionesForm extends ConfigFormBase {
     ksort($groupings);
 
     // Update options only, no value reset
-    $form['grave_code']['enclosure_wrapper']['enclosure']['#options'] = ['' => $this->t('- Select an option -')] + $enclosures;
-    $form['grave_code']['department_wrapper']['department']['#options'] = ['' => $this->t('- Select an option -')] + $departments;
-    $form['grave_code']['grouping_wrapper']['grouping']['#options'] = ['' => $this->t('- Select an option -')] + $groupings;
+    $form['grave_code']['enclosure_wrapper']['enclosure']['#options'] = ['' => $this->t('Unnamed')] + $enclosures;
+    $form['grave_code']['department_wrapper']['department']['#options'] = ['' => $this->t('Unnamed')] + $departments;
+    $form['grave_code']['grouping_wrapper']['grouping']['#options'] = ['' => $this->t('Unnamed')] + $groupings;
 
     $response = new AjaxResponse();
     $response->addCommand(new ReplaceCommand('#enclosure-wrapper', $form['grave_code']['enclosure_wrapper']));
@@ -511,10 +511,10 @@ class RetrocesionesForm extends ConfigFormBase {
     ksort($ways);
     ksort($groupings);
 
-    $form['grave_code']['enclosure_wrapper']['enclosure']['#options'] = ['' => $this->t('- Select an option -')] + $enclosures;
-    $form['grave_code']['department_wrapper']['department']['#options'] = ['' => $this->t('- Select an option -')] + $departments;
-    $form['grave_code']['way_wrapper']['way']['#options'] = ['' => $this->t('- Select an option -')] + $ways;
-    $form['grave_code']['grouping_wrapper']['grouping']['#options'] = ['' => $this->t('- Select an option -')] + $groupings;
+    $form['grave_code']['enclosure_wrapper']['enclosure']['#options'] = ['' => $this->t('Unnamed')] + $enclosures;
+    $form['grave_code']['department_wrapper']['department']['#options'] = ['' => $this->t('Unnamed')] + $departments;
+    $form['grave_code']['way_wrapper']['way']['#options'] = ['' => $this->t('Unnamed')] + $ways;
+    $form['grave_code']['grouping_wrapper']['grouping']['#options'] = ['' => $this->t('Unnamed')] + $groupings;
 
     // Do not clear values, only update options
     $response = new AjaxResponse();
@@ -570,9 +570,9 @@ class RetrocesionesForm extends ConfigFormBase {
     ksort($ways);
 
     // Update options only, keep selected values
-    $form['grave_code']['enclosure_wrapper']['enclosure']['#options'] = ['' => $this->t('- Select an option -')] + $enclosures;
-    $form['grave_code']['department_wrapper']['department']['#options'] = ['' => $this->t('- Select an option -')] + $departments;
-    $form['grave_code']['way_wrapper']['way']['#options'] = ['' => $this->t('- Select an option -')] + $ways;
+    $form['grave_code']['enclosure_wrapper']['enclosure']['#options'] = ['' => $this->t('Unnamed')] + $enclosures;
+    $form['grave_code']['department_wrapper']['department']['#options'] = ['' => $this->t('Unnamed')] + $departments;
+    $form['grave_code']['way_wrapper']['way']['#options'] = ['' => $this->t('Unnamed')] + $ways;
 
     $response = new AjaxResponse();
     $response->addCommand(new ReplaceCommand('#enclosure-wrapper', $form['grave_code']['enclosure_wrapper']));
@@ -610,6 +610,7 @@ class RetrocesionesForm extends ConfigFormBase {
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state): array {
+    $form['#attached']['library'][] = 'cementeris_retrocesiones/cementeris_retrocesiones';
 
     $form['#prefix'] = '<div id="retrocesiones-form-wrapper">';
     $form['#suffix'] = '</div>';
@@ -623,7 +624,7 @@ class RetrocesionesForm extends ConfigFormBase {
     $form['grave_code']['cemetery'] = [
       '#type' => 'select',
       '#title' => $this->t('Cemetery'),
-      '#options' => ['' => $this->t('- Select an option -')] + $this->getCemeteryList(),
+      '#options' => ['' => $this->t('Unnamed')] + $this->getCemeteryList(),
       '#required' => TRUE,
       '#ajax' => [
         'callback' => '::updateCemeteryDependents',
@@ -642,7 +643,7 @@ class RetrocesionesForm extends ConfigFormBase {
     $form['grave_code']['enclosure_wrapper']['enclosure'] = [
       '#type' => 'select',
       '#title' => $this->t('Enclosure'),
-      '#options' => ['' => $this->t('- Select an option -')],
+      '#options' => ['' => $this->t('Unnamed')],
       '#ajax' => [
         'callback' => '::updateDepartmentOptions',
         'event' => 'change',
@@ -675,7 +676,7 @@ class RetrocesionesForm extends ConfigFormBase {
     $form['grave_code']['department_wrapper']['department'] = [
       '#type' => 'select',
       '#title' => $this->t('Department'),
-      '#options' => ['' => $this->t('- Select an option -')],
+      '#options' => ['' => $this->t('Unnamed')],
       '#ajax' => [
         'callback' => '::updateWayOptions',
         'event' => 'change',
@@ -698,7 +699,7 @@ class RetrocesionesForm extends ConfigFormBase {
     $form['grave_code']['way_wrapper']['way'] = [
       '#type' => 'select',
       '#title' => $this->t('Way / Block / Zone'),
-      '#options' => ['' => $this->t('- Select an option -')],
+      '#options' => ['' => $this->t('Unnamed')],
       '#ajax' => [
         'callback' => '::updateGroupingOptions',
         'event' => 'change',
@@ -722,7 +723,7 @@ class RetrocesionesForm extends ConfigFormBase {
     $form['grave_code']['grouping_wrapper']['grouping'] = [
       '#type' => 'select',
       '#title' => $this->t('Grouping'),
-      '#options' => ['' => $this->t('- Select an option -')],
+      '#options' => ['' => $this->t('Unnamed')],
       '#default_value' => '',
       '#ajax' => [
         'callback' => '::updateGroupingDependents',
@@ -741,7 +742,7 @@ class RetrocesionesForm extends ConfigFormBase {
     $form['grave_code']['grave_type'] = [
       '#type' => 'select',
       '#title' => $this->t('Type of Grave'),
-      '#options' => ['' => $this->t('- Select an option -')] + $this->getGraveTypes(),
+      '#options' => ['' => $this->t('Unnamed')] + $this->getGraveTypes(),
       '#required' => TRUE,
       '#default_value' => '',
     ];
@@ -760,17 +761,17 @@ class RetrocesionesForm extends ConfigFormBase {
       '#default_value' => '',
     ];
 
-    // Bis
-    $form['grave_code']['bis'] = [
-      '#type' => 'checkbox',
-      '#title' => $this->t('Bis'),
-      '#default_value' => '',
-    ];
-
     // Floor
     $form['grave_code']['floor'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Floor'),
+      '#default_value' => '',
+    ];
+
+    // Bis
+    $form['grave_code']['bis'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Bis'),
       '#default_value' => '',
     ];
 
@@ -819,7 +820,7 @@ class RetrocesionesForm extends ConfigFormBase {
     // Accept data protection policy
     $form['acepta_politica'] = [
       '#type' => 'checkbox',
-      '#title' => $this->t('I have read and accept the CBSA data protection policy CBSA.'),
+      '#title' => $this->t('I have read and accept the CBSA data protection policy.'),
       '#required' => TRUE,
       '#description' => $this->t(
         '<a href=":url_ca" target="_blank">@catalan</a> | <a href=":url_es" target="_blank">@spanish</a>',
