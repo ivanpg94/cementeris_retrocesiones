@@ -6,10 +6,35 @@ cementeris_retrocesiones.admin_retrocesiones:
   requirements:
     _permission: 'access content'
 
-cementeris_retrocesiones.retrocesiones:
+#cementeris_retrocesiones.retrocesiones:
+#  path: '/concesiones/gestionytramite/retrocesiones'
+#  defaults:
+#    _form: '\Drupal\cementeris_retrocesiones\Form\RetrocesionesForm'
+#    _title: 'Retrocesiones'
+#  requirements:
+#    _access: 'TRUE'
+
+cementeris_retrocesiones.description:
   path: '/tramite/retrocesiones'
   defaults:
-    _form: '\Drupal\cementeris_retrocesiones\Form\RetrocesionesForm'
-    _title: 'Retrocesiones'
+    _controller: '\Drupal\cementeris_retrocesiones\Controller\CementerisRetrocesionesController::description'
+    _title: 'Setbacks'
   requirements:
-    _access: 'TRUE'
+    _permission: 'access content'
+
+cementeris_retrocesiones.information:
+  path: 'tramite/retrocesiones/information'
+  defaults:
+    _controller: '\Drupal\cementeris_retrocesiones\Controller\CementerisRetrocesionesController::information'
+    _title: 'Information'
+  requirements:
+    _permission: 'access tab2 pages'
+
+cementeris_retrocesiones.request:
+  path: 'tramite/retrocesiones/solicitud'
+  defaults:
+    _form: '\Drupal\cementeris_retrocesiones\Form\RetrocesionesForm'
+    _title: 'Request'
+  requirements:
+    _permission: 'access content'
+

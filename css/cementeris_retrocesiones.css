@@ -1,6 +1,61 @@
+.region-content{
+  padding-top: 11rem;
+  width:1280px;
+  max-width: 736px;
+  margin: 0 auto;
+  .secction-title{
+    color: #333!important;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 26px;
+    color: #4D4D4D;
+    max-width: 700px;
+    margin: 0 0 24px;
+  }
+  .page-information{
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 26px;
+    color: #4D4D4D;
+    max-width: 700px;
+  }
+}
+.region-highlighted{
+  display: flex;
+  flex-direction: column-reverse;
+  .tabs{
+    position: relative!important;
+    max-width: 1440px!important;
+    margin: 0 auto;
+    top: 0!important;
+    ul{
+      display: flex;
+      li{
+        flex: 1;
+        text-align: center;
+        a{
+          padding: 16px;
+          margin-bottom: 0;
+          color: #008018;
+          border: none;
+          border-bottom: 4px solid #DADADA;
+          border-radius: 0;
+          font-size: 18px;
+          line-height: 28px;
+          text-decoration: none;
+        }
+        .is-active{
+          border: none;
+          box-shadow: none;
+          border-bottom: 4px solid #008018;
+          color: #000;
+        }
+      }
+    }
+  }
+}
 div[id^="retrocesiones-form-wrapper"]{
   max-width: 736px;
-  padding-top: 4rem;
   width:1280px;
   display: flex;
   justify-content: center;
@@ -37,6 +92,9 @@ div[id^="retrocesiones-form-wrapper"]{
         padding-left: 10px;
       }
       label::before{
+        top: 25%;
+      }
+      label::after{
         top: 25%;
       }
       label[id^="edit-acepta-politica--description"]{
