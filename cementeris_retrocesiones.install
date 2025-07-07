@@ -1,9 +1,12 @@
 <?php
 
+use Drupal\path_alias\Entity\PathAlias;
+
 /**
  * Implements hook_install().
  */
-function cementeris_retrocesiones_install() {
+function cementeris_retrocesiones_install()
+{
   $module_path = drupal_get_path('module', 'cementeris_retrocesiones');
   $languages = ['ca', 'es'];
 
@@ -11,10 +14,32 @@ function cementeris_retrocesiones_install() {
     $po_file = DRUPAL_ROOT . "/$module_path/translations/$langcode.po";
     if (file_exists($po_file)) {
       $command = "drush locale:import $langcode $po_file -y";
-      // Ejecutar comando y capturar salida (opcional)
       $output = shell_exec($command);
-      // Puedes registrar la salida si lo necesitas
-      \Drupal::logger('cementeris_retrocesiones')->notice("Importación de traducción $langcode: $output");
     }
   }
+
+  // Crear alias multilingües
+  $aliases = [
+    [
+      'system_path' => '/tramite/retrocesiones',
+      'alias_ca' => '/tramit/retrocessions',
+    ],
+    [
+      'system_path' => '/tramite/retrocesiones/information',
+      'alias_ca' => '/tramit/retrocessions/informacio',
+    ],
+    [
+      'system_path' => '/tramite/retrocesiones/solicitud',
+      'alias_ca' => '/tramit/retrocessions/sol·licitud',
+    ],
+  ];
+
+  foreach ($aliases as $item) {
+    PathAlias::create([
+      'path' => $item['system_path'],
+      'alias' => $item['alias_ca'],
+      'langcode' => 'ca',
+    ])->save();
+  }
 }
+

@@ -3,6 +3,7 @@
 namespace Drupal\cementeris_retrocesiones\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
+use Drupal\path_alias\Entity\PathAlias;
 
 /**
  * Returns responses for Retrocesiones routes.
@@ -13,10 +14,13 @@ class CementerisRetrocesionesController extends ControllerBase {
    * Builds the response.
    */
   public function description(): array {
+    $build['#attached']['library'][] = 'cementeris_retrocesiones/cementeris_retrocesiones';
 
     $build['title'] = [
       '#type' => 'markup',
-      '#markup' => $this->t('description'),
+      '#markup' => $this->t('Description'),
+      '#prefix' => '<div class="secction-title">',
+      '#suffix' => '</div>',
     ];
     $build['description'] = [
       '#type' => 'markup',
@@ -29,10 +33,13 @@ class CementerisRetrocesionesController extends ControllerBase {
   }
 
   public function information(): array {
+    $build['#attached']['library'][] = 'cementeris_retrocesiones/cementeris_retrocesiones';
 
     $build['content'] = [
       '#type' => 'markup',
-      '#markup' => $this->t('information'),
+      '#markup' => $this->t('Information'),
+      '#prefix' => '<div class="secction-title">',
+      '#suffix' => '</div>',
     ];
     $build['description'] = [
       '#type' => 'markup',
