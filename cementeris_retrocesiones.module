@@ -1,5 +1,7 @@
 <?php
-
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Render\Markup;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
 
 /**
  * Implementación de hook_mail().
@@ -8,5 +10,53 @@ function cementeris_retrocesiones_mail($key, &$message, $params): void {
   if ($key == 'webservice_error') {
     $message['subject'] = $params['subject'];
     $message['body'][] = $params['message'];
+  }
+}
+
+/**
+ * Implements hook_form_alter().
+ */
+function cementeris_retrocesiones_form_alter(array &$form, FormStateInterface $form_state, string $form_id): void {
+  if ($form_id === 'cementeris_retrocessions_front') {
+    \Drupal::messenger()->deleteAll();
+
+    unset($form['#cache']);
+    $form['#cache'] = [
+      'max-age' => 0,
+      'contexts' => [],
+      'tags' => [],
+    ];
+
+    $form['#disable_inline_form_errors'] = TRUE;
+  }
+}
+
+/**
+ * Implements hook_preprocess_views_view().
+ *
+ * Add new link to gestion-y-tramites
+ *
+ */
+function cementeris_retrocesiones_preprocess_views_view(array &$variables) {
+  if ($variables['view']->id() === 'distribuidora_tramites' &&
+    $variables['view']->current_display === 'block_2') {
+
+    $lang = \Drupal::languageManager()->getCurrentLanguage()->getId();
+
+    $url = ($lang === 'ca') ? '/ca/tramit/retrocessions' : '/es/tramite/retrocesiones';
+    $hreflang = $lang;
+    $label = new TranslatableMarkup('Setbacks');
+
+    $markup = Markup::create('
+      <div class="views-row custom-item">
+        <div class="views-field views-field-title">
+          <span class="field-content">
+            <a href="' . $url . '" hreflang="' . $hreflang . '">' . $label . '</a>
+          </span>
+        </div>
+      </div>
+    ');
+
+    $variables['rows'][] = ['#markup' => $markup];
   }
 }

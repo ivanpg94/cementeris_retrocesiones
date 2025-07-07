@@ -18,7 +18,7 @@ cementeris_retrocesiones.description:
   path: '/tramite/retrocesiones'
   defaults:
     _controller: '\Drupal\cementeris_retrocesiones\Controller\CementerisRetrocesionesController::description'
-    _title: 'Retrocesiones'
+    _title: 'Setbacks'
   requirements:
     _permission: 'access content'
 
@@ -26,7 +26,7 @@ cementeris_retrocesiones.information:
   path: 'tramite/retrocesiones/information'
   defaults:
     _controller: '\Drupal\cementeris_retrocesiones\Controller\CementerisRetrocesionesController::information'
-    _title: 'Información'
+    _title: 'Information'
   requirements:
     _permission: 'access tab2 pages'
 
@@ -34,7 +34,7 @@ cementeris_retrocesiones.request:
   path: 'tramite/retrocesiones/solicitud'
   defaults:
     _form: '\Drupal\cementeris_retrocesiones\Form\RetrocesionesForm'
-    _title: 'Retrocesiones'
+    _title: 'Request'
   requirements:
     _permission: 'access content'
 

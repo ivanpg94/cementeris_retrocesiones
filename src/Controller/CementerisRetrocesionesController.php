@@ -3,6 +3,7 @@
 namespace Drupal\cementeris_retrocesiones\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
+use Drupal\path_alias\Entity\PathAlias;
 
 /**
  * Returns responses for Retrocesiones routes.
@@ -13,6 +14,7 @@ class CementerisRetrocesionesController extends ControllerBase {
    * Builds the response.
    */
   public function description(): array {
+    $build['#attached']['library'][] = 'cementeris_retrocesiones/cementeris_retrocesiones';
 
     $build['title'] = [
       '#type' => 'markup',
@@ -36,6 +38,7 @@ class CementerisRetrocesionesController extends ControllerBase {
   }
 
   public function information(): array {
+    $build['#attached']['library'][] = 'cementeris_retrocesiones/cementeris_retrocesiones';
 
     $build['content'] = [
       '#type' => 'markup',
@@ -43,7 +46,8 @@ class CementerisRetrocesionesController extends ControllerBase {
       '#prefix' => '<div class="title-page"><h3>',
       '#suffix' => '</h3></div>',
     ];
-    $build['description'] = [
+
+    $build['information'] = [
       '#type' => 'markup',
       '#markup' => $this->t('Quisque odio nisl, tempus sed imperdiet a, rhoncus commodo purus. Mauris quis dapibus orci. In semper congue sem, eu faucibus purus iaculis eu. Nulla risus urna, ornare a sem rhoncus, iaculis sollicitudin ex. Cras at convallis velit, eget egestas augue. Nulla massa ligula, vehicula eu erat vel, rhoncus bibendum erat. In interdum erat tortor, in mollis tortor ullamcorper ac. Morbi eget semper erat. Suspendisse ultrices aliquam lacus. Duis pharetra nulla nec posuere placerat. Morbi nec nisl sit amet lacus cursus ornare non ut urna. Maecenas quam quam, rhoncus non venenatis in, commodo et sapien. Duis in convallis ligula.'),
       '#prefix' => '<div class="page-information"><p>',
