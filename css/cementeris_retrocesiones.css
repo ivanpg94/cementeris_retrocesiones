@@ -1,0 +1,139 @@
+.region-content{
+  padding-top: 11rem;
+  width:1280px;
+  max-width: 736px;
+  margin: 0 auto;
+  .secction-title{
+    color: #333!important;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 26px;
+    color: #4D4D4D;
+    max-width: 700px;
+    margin: 0 0 24px;
+  }
+  .page-information{
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 26px;
+    color: #4D4D4D;
+    max-width: 700px;
+  }
+}
+.region-highlighted{
+  display: flex;
+  flex-direction: column-reverse;
+  .tabs{
+    position: relative!important;
+    max-width: 1440px!important;
+    margin: 0 auto;
+    top: 0!important;
+    ul{
+      display: flex;
+      li{
+        flex: 1;
+        text-align: center;
+        a{
+          padding: 16px;
+          margin-bottom: 0;
+          color: #008018;
+          border: none;
+          border-bottom: 4px solid #DADADA;
+          border-radius: 0;
+          font-size: 18px;
+          line-height: 28px;
+          text-decoration: none;
+        }
+        .is-active{
+          border: none;
+          box-shadow: none;
+          border-bottom: 4px solid #008018;
+          color: #000;
+        }
+      }
+    }
+  }
+}
+div[id^="retrocesiones-form-wrapper"]{
+  max-width: 736px;
+  width:1280px;
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
+  .cementeris-retrocessions-front{
+    width:1280px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem 0.5rem;
+    div[id^="edit-grave-code"]{
+      grid-column: 1 / span 2;
+      .panel-body{
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.5rem 0.5rem;
+        .form-item-cemetery {
+          grid-column: 1;
+        }
+        .input-group-addon{
+          display:none;
+        }
+      }
+    }
+
+    .form-item-acepta-politica{
+      margin: 0;
+      padding: 0;
+      grid-column: 1 / span 2;
+      input{
+        position: static;
+        height: 20px
+      }
+      label{
+        padding-left: 10px;
+      }
+      label::before{
+        top: 25%;
+      }
+      label::after{
+        top: 25%;
+      }
+      label[id^="edit-acepta-politica--description"]{
+        padding-left: 30px
+      }
+    }
+    .form-item-acepta-notificaciones{
+      margin: 0;
+      padding: 0;
+      grid-column: 1 / span 2;
+    }
+    button {
+      grid-column: 2;
+      justify-self: end;
+      background-color: #008018;
+      border-radius: 4px;
+      color: #fff;
+      transition: all 0.3s cubic-bezier(0, 0, 0.24, 0.9);
+      -webkit-transition: all 0.3s cubic-bezier(0, 0, 0.24, 0.9);
+      -moz-transition: all 0.3s cubic-bezier(0, 0, 0.24, 0.9);
+      -ms-transition: all 0.3s cubic-bezier(0, 0, 0.24, 0.9);
+      -o-transition: all 0.3s cubic-bezier(0, 0, 0.24, 0.9);
+      text-decoration: none;
+      font-family: "Sans" !important;
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 24px;
+      letter-spacing: 0em;
+      text-align: center;
+      padding: 14px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      outline: none;
+      border: 2px solid
+    }
+    .form-group{
+      margin-bottom: 0;
+    }
+  }
+}
