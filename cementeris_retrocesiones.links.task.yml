@@ -1,17 +1,17 @@
 cementeris_retrocesiones.description:
   route_name: cementeris_retrocesiones.description
-  title: Retrocesiones
+  title: Retrocessions
   base_route: cementeris_retrocesiones.description
   weight: 10
 
 cementeris_retrocesiones.information:
   route_name: cementeris_retrocesiones.information
-  title: Información
+  title: Information
   base_route: cementeris_retrocesiones.description
   weight: 20
 
 cementeris_retrocesiones.request:
   route_name: cementeris_retrocesiones.request
-  title: Solicitud
+  title: Request
   base_route: cementeris_retrocesiones.description
   weight: 30

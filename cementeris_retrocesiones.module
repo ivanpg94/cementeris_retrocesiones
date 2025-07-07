@@ -1,0 +1,12 @@
+<?php
+
+
+/**
+ * Implementación de hook_mail().
+ */
+function cementeris_retrocesiones_mail($key, &$message, $params): void {
+  if ($key == 'webservice_error') {
+    $message['subject'] = $params['subject'];
+    $message['body'][] = $params['message'];
+  }
+}

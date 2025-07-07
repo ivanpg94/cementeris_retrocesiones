@@ -1,6 +1,6 @@
 div[id^="retrocesiones-form-wrapper"]{
   max-width: 736px;
-  padding-top: 4rem;
+  padding-top: 10rem;
   width:1280px;
   display: flex;
   justify-content: center;
@@ -76,6 +76,29 @@ div[id^="retrocesiones-form-wrapper"]{
     }
     .form-group{
       margin-bottom: 0;
+    }
+  }
+}
+
+.path-tramite {
+  .dialog-off-canvas-main-canvas {
+    .main-content {
+      .highlighted {
+        .tabs {
+          margin-top: 2rem;
+        }
+      }
+      .region.region-content {
+        .title-page {
+          padding-top: 8rem;
+          padding-left: 8rem;
+        }
+        .page-information {
+          padding-top: 3rem;
+          margin-left: 11rem;
+          margin-right: 11rem;
+        }
+      }
     }
   }
 }

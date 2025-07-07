@@ -1,0 +1,4 @@
+services:
+  cementteris_retrocesiones.services:
+    class: Drupal\cementeris_retrocesiones\CementterisRetrocesionesServices
+    arguments: ['@logger.channel.default', '@messenger', '@cache.backend.database', '@current_user', '@http_client']
