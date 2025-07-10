@@ -4,7 +4,7 @@ cementeris_retrocesiones.admin_retrocesiones:
     _form: '\Drupal\cementeris_retrocesiones\Form\DateRangeForm'
     _title: 'Retrocesiones admin'
   requirements:
-    _permission: 'access content'
+    _role: 'administrator'
 
 cementeris_retrocesiones.request:
   path: '/tramite/ella-titular-quiere-devolver-la-sepultura-cbsa-retrocesion-cbsa-vuelve-adquirir-la/request'
