@@ -4,7 +4,7 @@ cementeris_retrocesiones.admin_retrocesiones:
     _form: '\Drupal\cementeris_retrocesiones\Form\DateRangeForm'
     _title: 'Retrocesiones admin'
   requirements:
-    _permission: 'access content'
+    _role: 'administrator'
 
 #cementeris_retrocesiones.retrocesiones:
 #  path: '/concesiones/gestionytramite/retrocesiones'
