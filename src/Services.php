@@ -6,6 +6,7 @@ use Drupal\Component\Serialization\Json;
 use Drupal\Core\Cache\CacheFactoryInterface;
 use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\Core\Session\AccountInterface;
+use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\ConnectException;
 use GuzzleHttp\Exception\GuzzleException;
@@ -15,21 +16,21 @@ use Psr\Log\LoggerInterface;
 /**
  * Service description.
  */
-class CementterisRetrocesionesServices {
+class Services {
 
   /**
    * A logger instance.
    *
-   * @var \Psr\Log\LoggerInterface
+   * @var LoggerInterface
    */
-  protected $logger;
+  protected LoggerInterface $logger;
 
   /**
    * The messenger.
    *
    * @var \Drupal\Core\Messenger\MessengerInterface
    */
-  protected $messenger;
+  protected MessengerInterface $messenger;
 
   /**
    * The cache.backend.database service.
@@ -48,9 +49,9 @@ class CementterisRetrocesionesServices {
   /**
    * The HTTP client.
    *
-   * @var \GuzzleHttp\ClientInterface
+   * @var ClientInterface
    */
-  protected $httpClient;
+  protected ClientInterface $httpClient;
 
   /**
    * Constructs a CementterisRetrocesionesServices object.
@@ -77,10 +78,15 @@ class CementterisRetrocesionesServices {
   /**
    * Method description.
    */
-  public function postCementiris() {
-    try {
+  public function postCementiris($paramsJson) {
 
-      $response = $this->httpClient->request('POST', 'https://accfun.cbsa.cat/gas/ws/r/RetroSolicPRE');
+    try {
+      $client = new Client();
+      $parms = [
+        'headers' => ['Content-Type' => 'application/json'],
+        'json' => $paramsJson,
+      ];
+      $response = $client->post('https://accfun.cbsa.cat/gas/ws/r/RetroSolicPRE', $parms);
       return Json::decode($response->getBody()->getContents());
     }
     catch (ConnectException $e) {
@@ -93,7 +99,11 @@ class CementterisRetrocesionesServices {
       $this->customHandlerExceptionMessage($e);
       return [];
     }
-
+    catch (GuzzleException $e) {
+      $this->logger->error('Error de Guzzle, ' . $e);
+      $this->customHandlerExceptionMessage($e);
+      return [];
+    }
   }
 
   /**

@@ -6,32 +6,8 @@ cementeris_retrocesiones.admin_retrocesiones:
   requirements:
     _permission: 'access content'
 
-#cementeris_retrocesiones.retrocesiones:
-#  path: '/concesiones/gestionytramite/retrocesiones'
-#  defaults:
-#    _form: '\Drupal\cementeris_retrocesiones\Form\RetrocesionesForm'
-#    _title: 'Retrocesiones'
-#  requirements:
-#    _access: 'TRUE'
-
-cementeris_retrocesiones.description:
-  path: '/tramite/retrocesiones'
-  defaults:
-    _controller: '\Drupal\cementeris_retrocesiones\Controller\CementerisRetrocesionesController::description'
-    _title: 'Setbacks'
-  requirements:
-    _permission: 'access content'
-
-cementeris_retrocesiones.information:
-  path: 'tramite/retrocesiones/information'
-  defaults:
-    _controller: '\Drupal\cementeris_retrocesiones\Controller\CementerisRetrocesionesController::information'
-    _title: 'Information'
-  requirements:
-    _permission: 'access tab2 pages'
-
 cementeris_retrocesiones.request:
-  path: 'tramite/retrocesiones/solicitud'
+  path: '/tramite/ella-titular-quiere-devolver-la-sepultura-cbsa-retrocesion-cbsa-vuelve-adquirir-la/request'
   defaults:
     _form: '\Drupal\cementeris_retrocesiones\Form\RetrocesionesForm'
     _title: 'Request'

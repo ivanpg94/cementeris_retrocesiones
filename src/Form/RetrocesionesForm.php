@@ -842,10 +842,10 @@ class RetrocesionesForm extends ConfigFormBase {
     $form['actions']['submit'] = [
       '#type' => 'submit',
       '#value' => $this->t('Confirm'),
-      '#ajax' => [
-        'callback' => '::ajaxSubmitCallback',
-        'wrapper'  => 'retrocesiones-form-wrapper',
-      ],
+//      '#ajax' => [
+//        'callback' => '::ajaxSubmitCallback',
+//        'wrapper'  => 'retrocesiones-form-wrapper',
+//      ],
     ];
     $form['#attached']['library'][] = 'core/drupal.dialog.ajax';
 
@@ -914,7 +914,9 @@ class RetrocesionesForm extends ConfigFormBase {
     $acepta_politica = $values['acepta_politica'] ?? FALSE;
     $acepta_notificaciones = $values['acepta_notificaciones'] ?? FALSE;
 
-    // CSV path
+
+
+    // Pass the codes from csv to array
     $file_path = DRUPAL_ROOT . '/' . drupal_get_path('module', 'cementeris_retrocesiones') . '/data/estructura_cementiris.csv';
 
     $match = null;
@@ -929,13 +931,11 @@ class RetrocesionesForm extends ConfigFormBase {
         $row_way = preg_replace('/\s+/', ' ', strtoupper(trim($data[10] ?? '')));
         $row_grouping = strtoupper(trim($data[13] ?? ''));
 
-        if (
-          $row_cemetery === strtoupper($cemetery) &&
+        if ($row_cemetery === strtoupper($cemetery) &&
           $row_enclosure === strtoupper($enclosure) &&
           $row_department === strtoupper($department) &&
           $row_way === strtoupper($way) &&
-          $row_grouping === strtoupper($grouping)
-        ) {
+          $row_grouping === strtoupper($grouping) ) {
           $match = $data;
           break;
         }
@@ -951,6 +951,33 @@ class RetrocesionesForm extends ConfigFormBase {
       $way = $match[8];
       $grouping = $match[11];
     }
+
+    $params = [
+      'rscement' => $cemetery,
+      'rsnivel1' => $enclosure,
+      'rsnivel2' => $department,
+      'rsnivel3' => $way,
+      'rsnivel4' => $grouping,
+      'rstipsep' => $values['grave_type'] ?? '',
+      'rsclasep' => $values['class'] ?? '',
+      'rsnumsep' => $values['number'] ?? '',
+      'rsbissep' => $values['bis'] == 0 ? '' : $values['bis'],
+      'rspissep' => $values['floor'] ?? '',
+      'rstitnif' => $values['nif'] ?? '',
+      'rstitnom' => $values['nombre'] ?? '',
+      'rstitcog1' => $values['apellido1'] ?? '',
+      'rstitcog2' => $values['apellido2'] ?? '',
+      'rstittelef' => $values['telefono'] ?? '',
+      'rstitemail' => $values['email'] ?? '',
+      'rsrgpd' => $values['acepta_politica'] ?? 1,
+      'rsconsentiment' => $values['acepta_notificaciones'] ?? 1,
+    ];
+
+    $service = \Drupal::service('cementeris_retrocesiones.services');
+    $message = $service->postCementiris($params);
+
+
+
   }
 }
 
