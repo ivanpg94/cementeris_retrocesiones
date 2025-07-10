@@ -16,6 +16,7 @@ use Drupal\node\Entity\Node;
 use Drupal\Core\Url;
 use Drupal\node\NodeInterface;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
+use Drupal\file\Entity\File;
 
 /**
  * Configuration form to store start and end dates for retrocessions.
@@ -43,7 +44,8 @@ class RetrocesionesForm extends ConfigFormBase {
    *   ['COLLSEROLA' => 'COLLSEROLA', ...]
    */
   private function getCemeteryList(): array {
-    $file_path = DRUPAL_ROOT . '/' . drupal_get_path('module', 'cementeris_retrocesiones') . '/data/estructura_cementiris.csv';
+//    $file_path = DRUPAL_ROOT . '/' . drupal_get_path('module', 'cementeris_retrocesiones') . '/data/estructura_cementiris.csv';
+    $file_path = \Drupal::service('file_system')->realpath(File::load(\Drupal::config('cementeris_retrocesiones.settings')->get('excel_file_structure_cementeris')[0])->getFileUri());
 
     if (!file_exists($file_path)) {
       return [];
@@ -76,7 +78,8 @@ class RetrocesionesForm extends ConfigFormBase {
    *   ['1' => 'OSARIO MISMO NIVEL', '4' => 'OSARIO GRUPO 2B', ...]
    */
   private function getGraveTypes(): array {
-    $file_path = DRUPAL_ROOT . '/' . drupal_get_path('module', 'cementeris_retrocesiones') . '/data/tipos_sepultura.csv';
+//    $file_path = DRUPAL_ROOT . '/' . drupal_get_path('module', 'cementeris_retrocesiones') . '/data/tipos_sepultura.csv';
+    $file_path = \Drupal::service('file_system')->realpath(File::load(\Drupal::config('cementeris_retrocesiones.settings')->get('excel_file_type_of_grave')[0])->getFileUri());
 
     if (!file_exists($file_path)) {
       return [];
@@ -108,7 +111,8 @@ class RetrocesionesForm extends ConfigFormBase {
    *   Associative array [ 'COLLSEROLA' => ['Recinte A', 'Recinte B'], ... ]
    */
   private function getEnclosuresByCemetery(): array {
-    $file_path = DRUPAL_ROOT . '/' . drupal_get_path('module', 'cementeris_retrocesiones') . '/data/estructura_cementiris.csv';
+//    $file_path = DRUPAL_ROOT . '/' . drupal_get_path('module', 'cementeris_retrocesiones') . '/data/estructura_cementiris.csv';
+    $file_path = \Drupal::service('file_system')->realpath(File::load(\Drupal::config('cementeris_retrocesiones.settings')->get('excel_file_structure_cementeris')[0])->getFileUri());
 
     if (!file_exists($file_path)) {
       return [];
@@ -193,7 +197,8 @@ class RetrocesionesForm extends ConfigFormBase {
    *   [ 'COLLSEROLA' => [ 'A' => [ '1' => 'DEPARTAMENT PRIMER', ... ] ] ]
    */
   private function getDepartmentsByCemeteryAndEnclosure(): array {
-    $file_path = DRUPAL_ROOT . '/' . drupal_get_path('module', 'cementeris_retrocesiones') . '/data/estructura_cementiris.csv';
+//    $file_path = DRUPAL_ROOT . '/' . drupal_get_path('module', 'cementeris_retrocesiones') . '/data/estructura_cementiris.csv';
+    $file_path = \Drupal::service('file_system')->realpath(File::load(\Drupal::config('cementeris_retrocesiones.settings')->get('excel_file_structure_cementeris')[0])->getFileUri());
 
     if (!file_exists($file_path)) {
       return [];
@@ -231,7 +236,8 @@ class RetrocesionesForm extends ConfigFormBase {
     $ways = [];
     $groupings = [];
 
-    $file_path = DRUPAL_ROOT . '/' . drupal_get_path('module', 'cementeris_retrocesiones') . '/data/estructura_cementiris.csv';
+//    $file_path = DRUPAL_ROOT . '/' . drupal_get_path('module', 'cementeris_retrocesiones') . '/data/estructura_cementiris.csv';
+    $file_path = \Drupal::service('file_system')->realpath(File::load(\Drupal::config('cementeris_retrocesiones.settings')->get('excel_file_structure_cementeris')[0])->getFileUri());
 
     if (file_exists($file_path) && ($handle = fopen($file_path, 'r')) !== FALSE) {
       fgetcsv($handle, 2000, ','); // Skip header
@@ -280,7 +286,8 @@ class RetrocesionesForm extends ConfigFormBase {
    * Returns ways by cemetery, enclosure and department.
    */
   private function getWaysByCemeteryEnclosureDepartment(): array {
-    $file_path = DRUPAL_ROOT . '/' . drupal_get_path('module', 'cementeris_retrocesiones') . '/data/estructura_cementiris.csv';
+//    $file_path = DRUPAL_ROOT . '/' . drupal_get_path('module', 'cementeris_retrocesiones') . '/data/estructura_cementiris.csv';
+    $file_path = \Drupal::service('file_system')->realpath(File::load(\Drupal::config('cementeris_retrocesiones.settings')->get('excel_file_structure_cementeris')[0])->getFileUri());
 
     if (!file_exists($file_path)) {
       return [];
@@ -320,7 +327,8 @@ class RetrocesionesForm extends ConfigFormBase {
     $ways = [];
     $groupings = [];
 
-    $file_path = DRUPAL_ROOT . '/' . drupal_get_path('module', 'cementeris_retrocesiones') . '/data/estructura_cementiris.csv';
+//    $file_path = DRUPAL_ROOT . '/' . drupal_get_path('module', 'cementeris_retrocesiones') . '/data/estructura_cementiris.csv';
+    $file_path = \Drupal::service('file_system')->realpath(File::load(\Drupal::config('cementeris_retrocesiones.settings')->get('excel_file_structure_cementeris')[0])->getFileUri());
 
     if (file_exists($file_path) && ($handle = fopen($file_path, 'r')) !== FALSE) {
       fgetcsv($handle); // Skip header
@@ -369,7 +377,8 @@ class RetrocesionesForm extends ConfigFormBase {
    * Returns groupings by cemetery, enclosure, department and way.
    */
   private function getGroupingsByCemeteryEnclosureDepartmentWay(): array {
-    $file_path = DRUPAL_ROOT . '/' . drupal_get_path('module', 'cementeris_retrocesiones') . '/data/estructura_cementiris.csv';
+//    $file_path = DRUPAL_ROOT . '/' . drupal_get_path('module', 'cementeris_retrocesiones') . '/data/estructura_cementiris.csv';
+    $file_path = \Drupal::service('file_system')->realpath(File::load(\Drupal::config('cementeris_retrocesiones.settings')->get('excel_file_structure_cementeris')[0])->getFileUri());
 
     if (!file_exists($file_path)) {
       return [];
@@ -417,7 +426,8 @@ class RetrocesionesForm extends ConfigFormBase {
     $departments = [];
     $groupings = [];
 
-    $file_path = DRUPAL_ROOT . '/' . drupal_get_path('module', 'cementeris_retrocesiones') . '/data/estructura_cementiris.csv';
+//    $file_path = DRUPAL_ROOT . '/' . drupal_get_path('module', 'cementeris_retrocesiones') . '/data/estructura_cementiris.csv';
+    $file_path = \Drupal::service('file_system')->realpath(File::load(\Drupal::config('cementeris_retrocesiones.settings')->get('excel_file_structure_cementeris')[0])->getFileUri());
 
     if (file_exists($file_path) && ($handle = fopen($file_path, 'r')) !== FALSE) {
       fgetcsv($handle); // Skip header
@@ -472,7 +482,8 @@ class RetrocesionesForm extends ConfigFormBase {
     $ways = [];
     $groupings = [];
 
-    $file_path = DRUPAL_ROOT . '/' . drupal_get_path('module', 'cementeris_retrocesiones') . '/data/estructura_cementiris.csv';
+//    $file_path = DRUPAL_ROOT . '/' . drupal_get_path('module', 'cementeris_retrocesiones') . '/data/estructura_cementiris.csv';
+    $file_path = \Drupal::service('file_system')->realpath(File::load(\Drupal::config('cementeris_retrocesiones.settings')->get('excel_file_structure_cementeris')[0])->getFileUri());
 
     if (file_exists($file_path) && ($handle = fopen($file_path, 'r')) !== FALSE) {
       fgetcsv($handle); // skip header
@@ -537,7 +548,8 @@ class RetrocesionesForm extends ConfigFormBase {
     $departments = [];
     $ways = [];
 
-    $file_path = DRUPAL_ROOT . '/' . drupal_get_path('module', 'cementeris_retrocesiones') . '/data/estructura_cementiris.csv';
+//    $file_path = DRUPAL_ROOT . '/' . drupal_get_path('module', 'cementeris_retrocesiones') . '/data/estructura_cementiris.csv';
+    $file_path = \Drupal::service('file_system')->realpath(File::load(\Drupal::config('cementeris_retrocesiones.settings')->get('excel_file_structure_cementeris')[0])->getFileUri());
 
     if (file_exists($file_path) && ($handle = fopen($file_path, 'r')) !== FALSE) {
       fgetcsv($handle); // skip header
@@ -610,244 +622,298 @@ class RetrocesionesForm extends ConfigFormBase {
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state): array {
+    $config = \Drupal::config('cementeris_retrocesiones.settings');
+
+    $start_date = $config->get('start_date');
+    $end_date = $config->get('end_date');
+    $today = date('Y-m-d');
     $form['#attached']['library'][] = 'cementeris_retrocesiones/cementeris_retrocesiones';
+//dump($today);
+//dump($start_date);
+//dump($end_date);
+//dump($today < $start_date);
+//dump($today > $end_date);
 
-    $form['#prefix'] = '<div id="retrocesiones-form-wrapper">';
-    $form['#suffix'] = '</div>';
-    // Group: Grave code
-    $form['grave_code'] = [
-      '#type' => 'fieldset',
-      '#title' => $this->t('Grave code'),
-    ];
 
-    // Cemetery
-    $form['grave_code']['cemetery'] = [
-      '#type' => 'select',
-      '#title' => $this->t('Cemetery'),
-      '#options' => ['' => $this->t('Unnamed')] + $this->getCemeteryList(),
-      '#required' => TRUE,
-      '#ajax' => [
-        'callback' => '::updateCemeteryDependents',
-        'event' => 'change',
-        'wrapper' => 'enclosure-wrapper',
-      ],
-      '#default_value' => '',
-      '#validated' => TRUE,
-    ];
+    if ($today >= $start_date && $today <= $end_date) {
 
-    // Enclosure
-    $form['grave_code']['enclosure_wrapper'] = [
-      '#type' => 'container',
-      '#attributes' => ['id' => 'enclosure-wrapper'],
-    ];
-    $form['grave_code']['enclosure_wrapper']['enclosure'] = [
-      '#type' => 'select',
-      '#title' => $this->t('Enclosure'),
-      '#options' => ['' => $this->t('Unnamed')],
-      '#ajax' => [
-        'callback' => '::updateDepartmentOptions',
-        'event' => 'change',
-        'wrapper' => 'department-wrapper',
-      ],
-      '#default_value' => NULL,
-      '#validated' => TRUE,
-    ];
+      $form['#prefix'] = '<div id="retrocesiones-form-wrapper">';
+      $form['#suffix'] = '</div>';
+      // Group: Grave code
+      $form['grave_code'] = [
+        '#type' => 'fieldset',
+        '#title' => $this->t('Grave code'),
+      ];
 
-    $trigger = $form_state->getTriggeringElement();
-    if (!empty($trigger) && isset($trigger['#name']) && $trigger['#name'] === 'grave_code[cemetery]') {
-      $form['grave_code']['enclosure_wrapper']['enclosure']['#value'] = '';
-      $form['grave_code']['enclosure_wrapper']['enclosure']['#default_value'] = '';
+      // Cemetery
+      $form['grave_code']['cemetery'] = [
+        '#type' => 'select',
+        '#title' => $this->t('Cemetery'),
+        '#options' => ['' => $this->t('Unnamed')] + $this->getCemeteryList(),
+        '#required' => TRUE,
+        '#ajax' => [
+          'callback' => '::updateCemeteryDependents',
+          'event' => 'change',
+          'wrapper' => 'enclosure-wrapper',
+        ],
+        '#default_value' => '',
+        '#validated' => TRUE,
+      ];
 
-      $form['grave_code']['department_wrapper']['department']['#value'] = '';
-      $form['grave_code']['department_wrapper']['department']['#default_value'] = '';
+      // Enclosure
+      $form['grave_code']['enclosure_wrapper'] = [
+        '#type' => 'container',
+        '#attributes' => ['id' => 'enclosure-wrapper'],
+      ];
+      $form['grave_code']['enclosure_wrapper']['enclosure'] = [
+        '#type' => 'select',
+        '#title' => $this->t('Enclosure'),
+        '#options' => ['' => $this->t('Unnamed')],
+        '#ajax' => [
+          'callback' => '::updateDepartmentOptions',
+          'event' => 'change',
+          'wrapper' => 'department-wrapper',
+        ],
+        '#default_value' => NULL,
+        '#validated' => TRUE,
+      ];
 
-      $form['grave_code']['way_wrapper']['way']['#value'] = '';
-      $form['grave_code']['way_wrapper']['way']['#default_value'] = '';
+      $trigger = $form_state->getTriggeringElement();
+      if (!empty($trigger) && isset($trigger['#name']) && $trigger['#name'] === 'grave_code[cemetery]') {
+        $form['grave_code']['enclosure_wrapper']['enclosure']['#value'] = '';
+        $form['grave_code']['enclosure_wrapper']['enclosure']['#default_value'] = '';
 
-      $form['grave_code']['grouping_wrapper']['grouping']['#value'] = '';
-      $form['grave_code']['grouping_wrapper']['grouping']['#default_value'] = '';
+        $form['grave_code']['department_wrapper']['department']['#value'] = '';
+        $form['grave_code']['department_wrapper']['department']['#default_value'] = '';
+
+        $form['grave_code']['way_wrapper']['way']['#value'] = '';
+        $form['grave_code']['way_wrapper']['way']['#default_value'] = '';
+
+        $form['grave_code']['grouping_wrapper']['grouping']['#value'] = '';
+        $form['grave_code']['grouping_wrapper']['grouping']['#default_value'] = '';
+      }
+
+      // Department
+      $form['grave_code']['department_wrapper'] = [
+        '#type' => 'container',
+        '#attributes' => ['id' => 'department-wrapper'],
+      ];
+      $form['grave_code']['department_wrapper']['department'] = [
+        '#type' => 'select',
+        '#title' => $this->t('Department'),
+        '#options' => ['' => $this->t('Unnamed')],
+        '#ajax' => [
+          'callback' => '::updateWayOptions',
+          'event' => 'change',
+          'wrapper' => 'way-wrapper',
+        ],
+        '#default_value' => '',
+        '#validated' => TRUE,
+      ];
+
+      if (!empty($trigger) && in_array($trigger['#name'], ['grave_code[cemetery]', 'grave_code[enclosure]'])) {
+        $form['grave_code']['department_wrapper']['department']['#value'] = '';
+        $form['grave_code']['department_wrapper']['department']['#default_value'] = '';
+      }
+
+      // Way / Block / Zone
+      $form['grave_code']['way_wrapper'] = [
+        '#type' => 'container',
+        '#attributes' => ['id' => 'way-wrapper'],
+      ];
+      $form['grave_code']['way_wrapper']['way'] = [
+        '#type' => 'select',
+        '#title' => $this->t('Way / Block / Zone'),
+        '#options' => ['' => $this->t('Unnamed')],
+        '#ajax' => [
+          'callback' => '::updateGroupingOptions',
+          'event' => 'change',
+          'wrapper' => 'grouping-wrapper',
+        ],
+        '#default_value' => '',
+        '#validated' => TRUE,
+      ];
+
+      if (!empty($trigger) && in_array($trigger['#name'], ['grave_code[cemetery]', 'grave_code[enclosure]', 'grave_code[way]'])) {
+        $form['grave_code']['way_wrapper']['way']['#value'] = '';
+        $form['grave_code']['way_wrapper']['way']['#default_value'] = '';
+      }
+
+      // Grouping
+      $form['grave_code']['grouping_wrapper'] = [
+        '#type' => 'container',
+        '#attributes' => ['id' => 'grouping-wrapper'],
+      ];
+
+      $form['grave_code']['grouping_wrapper']['grouping'] = [
+        '#type' => 'select',
+        '#title' => $this->t('Grouping'),
+        '#options' => ['' => $this->t('Unnamed')],
+        '#default_value' => '',
+        '#ajax' => [
+          'callback' => '::updateGroupingDependents',
+          'event' => 'change',
+          'wrapper' => 'enclosure-wrapper', // Or more if you want to refresh more fields
+        ],
+        '#validated' => TRUE,
+      ];
+
+      if (!empty($trigger) && in_array($trigger['#name'], ['grave_code[cemetery]', 'grave_code[enclosure]', 'grave_code[way]', 'grave_code[grouping]', 'grave_code[department]'])) {
+        $form['grave_code']['grouping_wrapper']['grouping']['#value'] = '';
+        $form['grave_code']['grouping_wrapper']['grouping']['#default_value'] = '';
+      }
+
+      // Grave type
+      $form['grave_code']['grave_type'] = [
+        '#type' => 'select',
+        '#title' => $this->t('Type of Grave'),
+        '#options' => ['' => $this->t('Unnamed')] + $this->getGraveTypes(),
+        '#required' => TRUE,
+        '#default_value' => '',
+      ];
+
+      // Class
+      $form['grave_code']['class'] = [
+        '#type' => 'textfield',
+        '#title' => $this->t('Class'),
+        '#default_value' => '',
+      ];
+
+      // Number
+      $form['grave_code']['number'] = [
+        '#type' => 'textfield',
+        '#title' => $this->t('Number'),
+        '#default_value' => '',
+      ];
+
+      // Bis
+      $form['grave_code']['bis'] = [
+        '#type' => 'checkbox',
+        '#title' => $this->t('Bis'),
+        '#default_value' => '',
+      ];
+
+      // Floor
+      $form['grave_code']['floor'] = [
+        '#type' => 'textfield',
+        '#title' => $this->t('Floor'),
+        '#default_value' => '',
+      ];
+
+      // NIF/NIE
+      $form['nif'] = [
+        '#type' => 'textfield',
+        '#title' => $this->t('NIF / NIE'),
+        '#required' => TRUE,
+      ];
+
+      // First name
+      $form['nombre'] = [
+        '#type' => 'textfield',
+        '#title' => $this->t('First name of the owner or co-owner'),
+        '#required' => TRUE,
+      ];
+
+      // First surname
+      $form['apellido1'] = [
+        '#type' => 'textfield',
+        '#title' => $this->t('First surname of the owner or co-owner'),
+        '#required' => TRUE,
+      ];
+
+      // Second surname
+      $form['apellido2'] = [
+        '#type' => 'textfield',
+        '#title' => $this->t('Second surname of the owner or co-owner'),
+        '#required' => TRUE,
+      ];
+
+      // Phone
+      $form['telefono'] = [
+        '#type' => 'textfield',
+        '#title' => $this->t('Contact phone number'),
+        '#required' => TRUE,
+      ];
+
+      // Email
+      $form['email'] = [
+        '#type' => 'email',
+        '#title' => $this->t('Email'),
+        '#required' => TRUE,
+      ];
+
+      // Accept data protection policy
+      $form['acepta_politica'] = [
+        '#type' => 'checkbox',
+        '#title' => $this->t('I have read and accept the CBSA data protection policy.'),
+        '#required' => TRUE,
+        '#description' => $this->t(
+          '<a href=":url_ca" target="_blank">@catalan</a> | <a href=":url_es" target="_blank">@spanish</a>',
+          [
+            ':url_ca' => 'https://cementiris.ajuntament.barcelona.cat/ca/avis-legal-i-privacitat',
+            ':url_es' => 'https://cementiris.ajuntament.barcelona.cat/es/avis-legal-i-privacitat',
+            '@catalan' => $this->t('Catalan'),
+            '@spanish' => $this->t('Spanish'),
+          ]
+        ),
+      ];
+
+      // Additional data protection information
+      $lang = \Drupal::languageManager()->getCurrentLanguage()->getId();
+      if ($lang === 'ca') {
+        $form['info_proteccio_dades'] = [
+          '#type' => 'markup',
+          '#markup' => '
+          <div class="info_proteccio_dades form-item js-form-item form-type-webform-markup js-form-type-webform-markup form-item-markup js-form-item-markup form-no-label form-group" id="edit-markup">
+            <p><strong>Informació bàsica sobre protecció de dades</strong></p>
+            <p>RESPONSABLE: Cementiris de Barcelona, S.A. FINALITAT: Gestionar i donar resposta a les comunicacions rebudes per part de les persones interessades. Si consent, utilitzarem les seves dades per fer-li arribar comunicacions de promoció de CBSA. DRETS: pot exercir els drets de retirada de consentiment, oposició, limitació, accés, rectificació, supressió i portabilitat, per correu postal a: C. Calàbria 66, 08015, Barcelona, o per correu electrònic a <a href="mailto:protecciodades_cbsa@bsmsa.cat">protecciodades_cbsa@bsmsa.cat</a>.</p>
+            <p>Pot accedir amb més detall a la informació addicional sobre Protecció de Dades a través del següent enllaç: <a href="/ca/avis-legal-i-privacitat">Avís legal i privacitat</a></p>
+          </div>
+        ',
+        ];
+      }
+      else {
+        $form['info_proteccio_dades'] = [
+          '#type' => 'markup',
+          '#markup' => '
+          <div class="info_proteccio_dades form-item js-form-item form-type-webform-markup js-form-type-webform-markup form-item-markup js-form-item-markup form-no-label form-group" id="edit-markup">
+            <p><strong>Información básica sobre protección de datos</strong></p>
+            <p>RESPONSABLE: Cementiris de Barcelona, SA. FINALIDAD: Gestionar y dar respuesta a las comunicaciones recibidas por parte de las personas interesadas. Si consiente, utilizaremos sus datos para hacerle llegar comunicaciones de promoción de CBSA. DERECHOS: puede ejercer los derechos de retirada de consentimiento, oposición, limitación, acceso, rectificación, supresión y portabilidad por correo postal (c/ Calàbria, 66, 08015, Barcelona) o por correo electrónico (<a href="mailto:protecciodades_cbsa@bsmsa.cat">protecciodades_cbsa@bsmsa.cat</a>).</p>
+            <p>Puede acceder con más detalle a la información adicional sobre protección de datos a través del siguiente enlace: <a href="/es/avis-legal-i-privacitat">Aviso legal y privacidad</a></p>
+          </div>
+        ',
+        ];
+      }
+
+
+      // Consent to notifications
+      $form['acepta_notificaciones'] = [
+        '#type' => 'checkbox',
+        '#title' => $this->t('I consent to receive notifications via the provided email or phone.'),
+        '#required' => FALSE,
+      ];
+      $form['actions']['submit'] = [
+        '#type' => 'submit',
+        '#value' => $this->t('Confirm'),
+        '#ajax' => [
+          'callback' => '::ajaxSubmitCallback',
+          'wrapper'  => 'retrocesiones-form-wrapper',
+        ],
+      ];
+      $form['#attached']['library'][] = 'core/drupal.dialog.ajax';
     }
-
-    // Department
-    $form['grave_code']['department_wrapper'] = [
-      '#type' => 'container',
-      '#attributes' => ['id' => 'department-wrapper'],
-    ];
-    $form['grave_code']['department_wrapper']['department'] = [
-      '#type' => 'select',
-      '#title' => $this->t('Department'),
-      '#options' => ['' => $this->t('Unnamed')],
-      '#ajax' => [
-        'callback' => '::updateWayOptions',
-        'event' => 'change',
-        'wrapper' => 'way-wrapper',
-      ],
-      '#default_value' => '',
-      '#validated' => TRUE,
-    ];
-
-    if (!empty($trigger) && in_array($trigger['#name'], ['grave_code[cemetery]', 'grave_code[enclosure]'])) {
-      $form['grave_code']['department_wrapper']['department']['#value'] = '';
-      $form['grave_code']['department_wrapper']['department']['#default_value'] = '';
+    elseif ($today > $end_date) {
+      $form['out_of_range'] = [
+        '#type' => 'markup',
+        '#markup' => '<div class="messages messages--error">' . $this->t('Te pasaste') . '</div>',
+      ];
     }
-
-    // Way / Block / Zone
-    $form['grave_code']['way_wrapper'] = [
-      '#type' => 'container',
-      '#attributes' => ['id' => 'way-wrapper'],
-    ];
-    $form['grave_code']['way_wrapper']['way'] = [
-      '#type' => 'select',
-      '#title' => $this->t('Way / Block / Zone'),
-      '#options' => ['' => $this->t('Unnamed')],
-      '#ajax' => [
-        'callback' => '::updateGroupingOptions',
-        'event' => 'change',
-        'wrapper' => 'grouping-wrapper',
-      ],
-      '#default_value' => '',
-      '#validated' => TRUE,
-    ];
-
-    if (!empty($trigger) && in_array($trigger['#name'], ['grave_code[cemetery]', 'grave_code[enclosure]', 'grave_code[way]'])) {
-      $form['grave_code']['way_wrapper']['way']['#value'] = '';
-      $form['grave_code']['way_wrapper']['way']['#default_value'] = '';
+    elseif ($today < $start_date) {
+      $form['out_of_range'] = [
+        '#type' => 'markup',
+        '#markup' => '<div class="messages messages--warning">' . $this->t('Te has adelantado') . '</div>',
+      ];
     }
-
-    // Grouping
-    $form['grave_code']['grouping_wrapper'] = [
-      '#type' => 'container',
-      '#attributes' => ['id' => 'grouping-wrapper'],
-    ];
-
-    $form['grave_code']['grouping_wrapper']['grouping'] = [
-      '#type' => 'select',
-      '#title' => $this->t('Grouping'),
-      '#options' => ['' => $this->t('Unnamed')],
-      '#default_value' => '',
-      '#ajax' => [
-        'callback' => '::updateGroupingDependents',
-        'event' => 'change',
-        'wrapper' => 'enclosure-wrapper', // Or more if you want to refresh more fields
-      ],
-      '#validated' => TRUE,
-    ];
-
-    if (!empty($trigger) && in_array($trigger['#name'], ['grave_code[cemetery]', 'grave_code[enclosure]', 'grave_code[way]', 'grave_code[grouping]', 'grave_code[department]'])) {
-      $form['grave_code']['grouping_wrapper']['grouping']['#value'] = '';
-      $form['grave_code']['grouping_wrapper']['grouping']['#default_value'] = '';
-    }
-
-    // Grave type
-    $form['grave_code']['grave_type'] = [
-      '#type' => 'select',
-      '#title' => $this->t('Type of Grave'),
-      '#options' => ['' => $this->t('Unnamed')] + $this->getGraveTypes(),
-      '#required' => TRUE,
-      '#default_value' => '',
-    ];
-
-    // Class
-    $form['grave_code']['class'] = [
-      '#type' => 'textfield',
-      '#title' => $this->t('Class'),
-      '#default_value' => '',
-    ];
-
-    // Number
-    $form['grave_code']['number'] = [
-      '#type' => 'textfield',
-      '#title' => $this->t('Number'),
-      '#default_value' => '',
-    ];
-
-    // Floor
-    $form['grave_code']['floor'] = [
-      '#type' => 'textfield',
-      '#title' => $this->t('Floor'),
-      '#default_value' => '',
-    ];
-
-    // Bis
-    $form['grave_code']['bis'] = [
-      '#type' => 'checkbox',
-      '#title' => $this->t('Bis'),
-      '#default_value' => '',
-    ];
-
-    // NIF/NIE
-    $form['nif'] = [
-      '#type' => 'textfield',
-      '#title' => $this->t('NIF / NIE'),
-      '#required' => TRUE,
-    ];
-
-    // First name
-    $form['nombre'] = [
-      '#type' => 'textfield',
-      '#title' => $this->t('First name of the owner or co-owner'),
-      '#required' => TRUE,
-    ];
-
-    // First surname
-    $form['apellido1'] = [
-      '#type' => 'textfield',
-      '#title' => $this->t('First surname of the owner or co-owner'),
-      '#required' => TRUE,
-    ];
-
-    // Second surname
-    $form['apellido2'] = [
-      '#type' => 'textfield',
-      '#title' => $this->t('Second surname of the owner or co-owner'),
-      '#required' => TRUE,
-    ];
-
-    // Phone
-    $form['telefono'] = [
-      '#type' => 'textfield',
-      '#title' => $this->t('Contact phone number'),
-      '#required' => TRUE,
-    ];
-
-    // Email
-    $form['email'] = [
-      '#type' => 'email',
-      '#title' => $this->t('Email'),
-      '#required' => TRUE,
-    ];
-
-    // Accept data protection policy
-    $form['acepta_politica'] = [
-      '#type' => 'checkbox',
-      '#title' => $this->t('I have read and accept the CBSA data protection policy.'),
-      '#required' => TRUE,
-      '#description' => $this->t(
-        '<a href=":url_ca" target="_blank">@catalan</a> | <a href=":url_es" target="_blank">@spanish</a>',
-        [
-          ':url_ca' => 'https://cementiris.ajuntament.barcelona.cat/ca/avis-legal-i-privacitat',
-          ':url_es' => 'https://cementiris.ajuntament.barcelona.cat/es/avis-legal-i-privacitat',
-          '@catalan' => $this->t('Catalan'),
-          '@spanish' => $this->t('Spanish'),
-        ]
-      ),
-    ];
-
-    // Consent to notifications
-    $form['acepta_notificaciones'] = [
-      '#type' => 'checkbox',
-      '#title' => $this->t('I consent to receive notifications via the provided email or phone.'),
-      '#required' => FALSE,
-    ];
-    $form['actions']['submit'] = [
-      '#type' => 'submit',
-      '#value' => $this->t('Confirm'),
-      '#ajax' => [
-        'callback' => '::ajaxSubmitCallback',
-        'wrapper'  => 'retrocesiones-form-wrapper',
-      ],
-    ];
-    $form['#attached']['library'][] = 'core/drupal.dialog.ajax';
 
     return $form;
   }
@@ -915,7 +981,8 @@ class RetrocesionesForm extends ConfigFormBase {
     $acepta_notificaciones = $values['acepta_notificaciones'] ?? FALSE;
 
     // CSV path
-    $file_path = DRUPAL_ROOT . '/' . drupal_get_path('module', 'cementeris_retrocesiones') . '/data/estructura_cementiris.csv';
+//    $file_path = DRUPAL_ROOT . '/' . drupal_get_path('module', 'cementeris_retrocesiones') . '/data/estructura_cementiris.csv';
+    $file_path = \Drupal::service('file_system')->realpath(File::load(\Drupal::config('cementeris_retrocesiones.settings')->get('excel_file_structure_cementeris')[0])->getFileUri());
 
     $match = null;
 
@@ -1009,7 +1076,8 @@ class RetrocesionesForm extends ConfigFormBase {
     $acepta_notificaciones = $values['acepta_notificaciones'] ?? FALSE;
 
     // CSV path
-    $file_path = DRUPAL_ROOT . '/' . drupal_get_path('module', 'cementeris_retrocesiones') . '/data/estructura_cementiris.csv';
+//    $file_path = DRUPAL_ROOT . '/' . drupal_get_path('module', 'cementeris_retrocesiones') . '/data/estructura_cementiris.csv';
+    $file_path = \Drupal::service('file_system')->realpath(File::load(\Drupal::config('cementeris_retrocesiones.settings')->get('excel_file_structure_cementeris')[0])->getFileUri());
 
     $match = null;
 
