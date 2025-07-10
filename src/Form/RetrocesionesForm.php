@@ -628,12 +628,6 @@ class RetrocesionesForm extends ConfigFormBase {
     $end_date = $config->get('end_date');
     $today = date('Y-m-d');
     $form['#attached']['library'][] = 'cementeris_retrocesiones/cementeris_retrocesiones';
-//dump($today);
-//dump($start_date);
-//dump($end_date);
-//dump($today < $start_date);
-//dump($today > $end_date);
-
 
     if ($today >= $start_date && $today <= $end_date) {
 
@@ -895,6 +889,10 @@ class RetrocesionesForm extends ConfigFormBase {
       $form['actions']['submit'] = [
         '#type' => 'submit',
         '#value' => $this->t('Confirm'),
+        '#ajax' => [
+          'callback' => '::ajaxSubmitCallback',
+          'wrapper'  => 'retrocesiones-form-wrapper',
+        ],
       ];
     }
     elseif ($today > $end_date) {
@@ -954,7 +952,18 @@ class RetrocesionesForm extends ConfigFormBase {
   /**
    * {@inheritdoc}
    */
-  public function submitForm(array &$form, FormStateInterface $form_state): void {
+  public function ajaxSubmitCallback(array &$form, FormStateInterface $form_state): AjaxResponse {
+    $response = new AjaxResponse();
+
+    // 1) Si hay errores de validación, devolvemos el formulario actualizado.
+    if ($form_state->getErrors()) {
+      $response->addCommand(new ReplaceCommand(
+        '#retrocesiones-form-wrapper',   // ← el wrapper de tu formulario
+        $form
+      ));
+      return $response;
+    }
+
     $values = $form_state->getValues();
 
     $cemetery = $values['cemetery'] ?? '';
@@ -977,9 +986,11 @@ class RetrocesionesForm extends ConfigFormBase {
     $acepta_notificaciones = $values['acepta_notificaciones'] ?? FALSE;
 
     // Pass the codes from csv to array
-    $file_path = \Drupal::service('file_system')->realpath(File::load(\Drupal::config('cementeris_retrocesiones.settings')->get('excel_file_structure_cementeris')[0])->getFileUri());
+    $file_path = \Drupal::service('file_system')
+      ->realpath(File::load(\Drupal::config('cementeris_retrocesiones.settings')
+        ->get('excel_file_structure_cementeris')[0])->getFileUri());
 
-    $match = null;
+    $match = NULL;
 
     if (file_exists($file_path) && ($handle = fopen($file_path, 'r')) !== FALSE) {
       $header = fgetcsv($handle, 2000, ',');
@@ -995,7 +1006,7 @@ class RetrocesionesForm extends ConfigFormBase {
           $row_enclosure === strtoupper($enclosure) &&
           $row_department === strtoupper($department) &&
           $row_way === strtoupper($way) &&
-          $row_grouping === strtoupper($grouping) ) {
+          $row_grouping === strtoupper($grouping)) {
           $match = $data;
           break;
         }
@@ -1036,6 +1047,22 @@ class RetrocesionesForm extends ConfigFormBase {
     $service = \Drupal::service('cementeris_retrocesiones.services');
     $message = $service->postCementiris($params);
 
+    $content['#theme'] = 'item_list';
+
+    if ($message['rscond1'] = 'S' && $message['rscond2'] = 'S' && $message['rscond3'] = 'S' &&
+          $message['rscond4'] = 'S' && $message['rscond5'] = 'S' && $message['rscond6'] = 'S' ) {
+      $content['#items'] = [t('Dato enviado por Cesar')];
+    } else {
+      $content['#items'] = [$message['rsmissatges']['missatge']];
+    }
+
+    $response->addCommand(new OpenModalDialogCommand(
+      $this->t('Solicitud enviada'),
+      $content,
+      ['width' => '500']
+    ));
+
+    return $response;
   }
 }
 
