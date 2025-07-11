@@ -901,13 +901,13 @@ class RetrocesionesForm extends ConfigFormBase {
     elseif ($today > $end_date) {
       $form['out_of_range'] = [
         '#type' => 'markup',
-        '#markup' => '<div class="messages messages--error">' . $this->t('Te pasaste') . '</div>',
+        '#markup' => '<div class="messages messages--error">' . $this->t('Este proceso ya ha finalizado. ') . '</div>',
       ];
     }
     elseif ($today < $start_date) {
       $form['out_of_range'] = [
         '#type' => 'markup',
-        '#markup' => '<div class="messages messages--warning">' . $this->t('Te has adelantado') . '</div>',
+        '#markup' => '<div class="messages messages--warning">' . $this->t('Este proceso aún no ha comenzado.') . '</div>',
       ];
     }
 
