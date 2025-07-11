@@ -1,0 +1,6 @@
+cementeris_retrocesiones.admin_retrocesiones:
+  title: 'Ajustaments formulari retrocessions'
+  description: 'Formulario de administración de retrocesiones'
+  parent: cementiris_private_area.settings
+  route_name: cementeris_retrocesiones.admin_retrocesiones
+  weight: 0

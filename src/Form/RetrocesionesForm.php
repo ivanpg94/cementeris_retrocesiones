@@ -630,7 +630,10 @@ class RetrocesionesForm extends ConfigFormBase {
     $form['#attached']['library'][] = 'cementeris_retrocesiones/cementeris_retrocesiones';
 
     if ($today >= $start_date && $today <= $end_date) {
-
+      $form['form_title'] = [
+        '#type' => 'markup',
+        '#markup' => '<h2>' . $this->t('Formulario de Retrocesiones') . '</h2>',
+      ];
       $form['#prefix'] = '<div id="retrocesiones-form-wrapper">';
       $form['#suffix'] = '</div>';
       // Group: Grave code
@@ -1059,7 +1062,11 @@ class RetrocesionesForm extends ConfigFormBase {
     $response->addCommand(new OpenModalDialogCommand(
       $this->t('Solicitud enviada'),
       $content,
-      ['width' => '500']
+      [
+        'width' => 500,
+        'height' => 400,
+        'dialogClass' => 'retrocesions-modal'
+      ]
     ));
 
     return $response;

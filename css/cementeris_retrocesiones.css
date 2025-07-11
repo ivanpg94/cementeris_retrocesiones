@@ -1,163 +1,227 @@
-.region-content{
-  padding-top: 11rem;
-  width:1280px;
+.region-content {
+  padding-top: 5rem;
+  width: 1280px;
   max-width: 736px;
   margin: 0 auto;
-  .secction-title{
-    color: #333!important;
-    font-weight: bold;
-    font-size: 18px;
-    line-height: 26px;
-    color: #4D4D4D;
-    max-width: 700px;
-    margin: 0 0 24px;
-  }
-  .page-information{
-    font-weight: 400;
-    font-size: 18px;
-    line-height: 26px;
-    color: #4D4D4D;
-    max-width: 700px;
-  }
 }
-.region-highlighted{
+.region-content .secction-title {
+  color: #333 !important;
+  font-weight: bold;
+  font-size: 18px;
+  line-height: 26px;
+  color: #4D4D4D;
+  max-width: 700px;
+  margin: 0 0 24px;
+}
+.region-content .page-information {
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 26px;
+  color: #4D4D4D;
+  max-width: 700px;
+}
+.region-highlighted {
   display: flex;
   flex-direction: column-reverse;
-  .tabs{
-    position: relative!important;
-    max-width: 1440px!important;
-    margin: 0 auto;
-    top: 0!important;
-    ul{
-      display: flex;
-      li{
-        flex: 1;
-        text-align: center;
-        a{
-          padding: 16px;
-          margin-bottom: 0;
-          color: #008018;
-          border: none;
-          border-bottom: 4px solid #DADADA;
-          border-radius: 0;
-          font-size: 18px;
-          line-height: 28px;
-          text-decoration: none;
-        }
-        .is-active{
-          border: none;
-          box-shadow: none;
-          border-bottom: 4px solid #008018;
-          color: #000;
-        }
-      }
-    }
-  }
 }
-div[id^="retrocesiones-form-wrapper"]{
+.region-highlighted .tabs {
+  position: relative !important;
+  max-width: 1440px !important;
+  margin: 0 auto;
+  top: 0 !important;
+}
+.region-highlighted .tabs ul {
+  display: flex;
+}
+.region-highlighted .tabs ul li {
+  flex: 1;
+  text-align: center;
+}
+.region-highlighted .tabs ul li a {
+  padding: 16px;
+  margin-bottom: 0;
+  color: #008018;
+  border: none;
+  border-bottom: 4px solid #DADADA;
+  border-radius: 0;
+  font-size: 18px;
+  line-height: 28px;
+  text-decoration: none;
+}
+.region-highlighted .tabs ul li .is-active {
+  border: none;
+  box-shadow: none;
+  border-bottom: 4px solid #008018;
+  color: #000;
+}
+div[id^="retrocesiones-form-wrapper"] {
   max-width: 736px;
-  padding-top: 10rem;
-  width:1280px;
+  padding-top: 0;
+  width: 1280px;
   display: flex;
   justify-content: center;
   margin: 0 auto;
-  .cementeris-retrocessions-front{
-    width:1280px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 0.5rem 0.5rem;
-    div[id^="edit-grave-code"]{
-      grid-column: 1 / span 2;
-      .panel-body{
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 0.5rem 0.5rem;
-        .form-item-cemetery {
-          grid-column: 1;
-        }
-        .input-group-addon{
-          display:none;
-        }
-      }
-    }
-
-    .form-item-acepta-politica{
-      margin: 0;
-      padding: 0;
-      grid-column: 1 / span 2;
-      input{
-        position: static;
-        height: 20px
-      }
-      label{
-        padding-left: 10px;
-      }
-      label::before{
-        top: 25%;
-      }
-      label::after{
-        top: 25%;
-      }
-      label[id^="edit-acepta-politica--description"]{
-        padding-left: 30px
-      }
-    }
-    .form-item-acepta-notificaciones{
-      margin: 0;
-      padding: 0;
-      grid-column: 1 / span 2;
-    }
-    button {
-      grid-column: 2;
-      justify-self: end;
-      background-color: #008018;
-      border-radius: 4px;
-      color: #fff;
-      transition: all 0.3s cubic-bezier(0, 0, 0.24, 0.9);
-      -webkit-transition: all 0.3s cubic-bezier(0, 0, 0.24, 0.9);
-      -moz-transition: all 0.3s cubic-bezier(0, 0, 0.24, 0.9);
-      -ms-transition: all 0.3s cubic-bezier(0, 0, 0.24, 0.9);
-      -o-transition: all 0.3s cubic-bezier(0, 0, 0.24, 0.9);
-      text-decoration: none;
-      font-family: "Sans" !important;
-      font-size: 16px;
-      font-weight: 600;
-      line-height: 24px;
-      letter-spacing: 0em;
-      text-align: center;
-      padding: 14px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-      outline: none;
-      border: 2px solid
-    }
-    .form-group{
-      margin-bottom: 0;
-    }
+}
+div[id^="retrocesiones-form-wrapper"] .cementeris-retrocessions-front {
+  width: 1280px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem 0.5rem;
+}
+div[id^="retrocesiones-form-wrapper"] .cementeris-retrocessions-front h2 {
+  width: 100%;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 32px;
+  color: #333;
+}
+div[id^="retrocesiones-form-wrapper"] .cementeris-retrocessions-front div[id^="edit-grave-code"] {
+  grid-column: 1 / span 2;
+}
+div[id^="retrocesiones-form-wrapper"] .cementeris-retrocessions-front div[id^="edit-grave-code"] .panel-body {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem 0.5rem;
+}
+div[id^="retrocesiones-form-wrapper"] .cementeris-retrocessions-front div[id^="edit-grave-code"] .panel-body .form-item-cemetery {
+  grid-column: 1;
+}
+div[id^="retrocesiones-form-wrapper"] .cementeris-retrocessions-front div[id^="edit-grave-code"] .panel-body .input-group-addon {
+  display: none;
+}
+div[id^="retrocesiones-form-wrapper"] .cementeris-retrocessions-front .form-item-acepta-politica {
+  margin: 0;
+  padding: 0;
+  grid-column: 1 / span 2;
+}
+div[id^="retrocesiones-form-wrapper"] .cementeris-retrocessions-front .form-item-acepta-politica input {
+  position: static;
+  height: 20px;
+}
+div[id^="retrocesiones-form-wrapper"] .cementeris-retrocessions-front .form-item-acepta-politica label {
+  padding-left: 10px;
+}
+div[id^="retrocesiones-form-wrapper"] .cementeris-retrocessions-front .form-item-acepta-politica label::before {
+  top: 25%;
+}
+div[id^="retrocesiones-form-wrapper"] .cementeris-retrocessions-front .form-item-acepta-politica label::after {
+  top: 25%;
+}
+div[id^="retrocesiones-form-wrapper"] .cementeris-retrocessions-front .form-item-acepta-politica label[id^="edit-acepta-politica--description"] {
+  padding-left: 30px;
+}
+div[id^="retrocesiones-form-wrapper"] .cementeris-retrocessions-front .form-item-acepta-notificaciones {
+  margin: 0;
+  padding: 0;
+  grid-column: 1 / span 2;
+}
+div[id^="retrocesiones-form-wrapper"] .cementeris-retrocessions-front .info_proteccio_dades {
+  grid-column: 1 / span 2;
+}
+div[id^="retrocesiones-form-wrapper"] .cementeris-retrocessions-front button {
+  grid-column: 2;
+  justify-self: end;
+  background-color: #008018;
+  border-radius: 4px;
+  color: #fff;
+  transition: all 0.3s cubic-bezier(0, 0, 0.24, 0.9);
+  -webkit-transition: all 0.3s cubic-bezier(0, 0, 0.24, 0.9);
+  -moz-transition: all 0.3s cubic-bezier(0, 0, 0.24, 0.9);
+  -ms-transition: all 0.3s cubic-bezier(0, 0, 0.24, 0.9);
+  -o-transition: all 0.3s cubic-bezier(0, 0, 0.24, 0.9);
+  text-decoration: none;
+  font-family: "Sans" !important;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 24px;
+  letter-spacing: 0em;
+  text-align: center;
+  padding: 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  outline: none;
+  border: 2px solid;
+}
+div[id^="retrocesiones-form-wrapper"] .cementeris-retrocessions-front .form-group {
+  margin-bottom: 0;
+}
+.path-tramite .dialog-off-canvas-main-canvas .main-content .highlighted .tabs {
+  margin-top: 2rem;
+}
+.path-tramite .dialog-off-canvas-main-canvas .main-content .region.region-content .title-page {
+  padding-top: 8rem;
+  padding-left: 8rem;
+}
+.path-tramite .dialog-off-canvas-main-canvas .main-content .region.region-content .page-information {
+  padding-top: 3rem;
+  margin-left: 11rem;
+  margin-right: 11rem;
+}
+.retrocesions-modal #drupal-modal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.retrocesions-modal .ui-dialog-titlebar {
+  background-color: white;
+  border: 0;
+}
+.retrocesions-modal .ui-dialog-titlebar span {
+  display: flex;
+  justify-content: center;
+  color: #008018;
+}
+.retrocesions-modal .ui-dialog-titlebar-close {
+  background-color: #008018;
+}
+.retrocesions-modal .ui-dialog-titlebar-close::before {
+  content: "✕";
+  font-size: 16px;
+  color: white;
+  display: inline-block;
+  text-align: center;
+  width: 100%;
+  margin-top: -2px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+@media (max-width: 800px) {
+  .region-content {
+    width: 100vw;
+  }
+  div[id^="retrocesiones-form-wrapper"] {
+    max-width: 600px;
+    width: 600px;
+  }
+  div[id^="retrocesiones-form-wrapper"] .cementeris-retrocessions-front {
+    width: 600px;
   }
 }
-
-.path-tramite {
-  .dialog-off-canvas-main-canvas {
-    .main-content {
-      .highlighted {
-        .tabs {
-          margin-top: 2rem;
-        }
-      }
-      .region.region-content {
-        .title-page {
-          padding-top: 8rem;
-          padding-left: 8rem;
-        }
-        .page-information {
-          padding-top: 3rem;
-          margin-left: 11rem;
-          margin-right: 11rem;
-        }
-      }
-    }
+@media (max-width: 700px) {
+  .region-content {
+    width: 100vw;
+  }
+  div[id^="retrocesiones-form-wrapper"] {
+    max-width: 400px;
+    width: 400px;
+  }
+  div[id^="retrocesiones-form-wrapper"] .cementeris-retrocessions-front {
+    width: 400px;
+  }
+}
+@media (max-width: 450px) {
+  .region-content {
+    width: 100vw;
+  }
+  div[id^="retrocesiones-form-wrapper"] {
+    max-width: 300px;
+    width: 300px;
+  }
+  div[id^="retrocesiones-form-wrapper"] .cementeris-retrocessions-front {
+    width: 300px;
   }
 }
