@@ -955,15 +955,11 @@ class RetrocesionesForm extends ConfigFormBase {
   public function ajaxSubmitCallback(array &$form, FormStateInterface $form_state): AjaxResponse {
     $response = new AjaxResponse();
 
-    // 1) Si hay errores de validación, devolvemos el formulario actualizado.
+    // Si hay errores de validación, devolvemos el formulario actualizado.
     if ($form_state->getErrors()) {
-      $response->addCommand(new ReplaceCommand(
-        '#retrocesiones-form-wrapper',   // ← el wrapper de tu formulario
-        $form
-      ));
+      $response->addCommand(new ReplaceCommand('#retrocesiones-form-wrapper', $form));
       return $response;
     }
-
     $values = $form_state->getValues();
 
     $cemetery = $values['cemetery'] ?? '';
@@ -1049,17 +1045,42 @@ class RetrocesionesForm extends ConfigFormBase {
 
     $content['#theme'] = 'item_list';
 
-    if ($message['rscond1'] = 'S' && $message['rscond2'] = 'S' && $message['rscond3'] = 'S' &&
-          $message['rscond4'] = 'S' && $message['rscond5'] = 'S' && $message['rscond6'] = 'S' ) {
-      $content['#items'] = [t('Dato enviado por Cesar')];
+    if ($message['rscond1'] == 'S' && $message['rscond2'] == 'S' && $message['rscond3'] == 'S' &&
+          $message['rscond4'] == 'S' && $message['rscond5'] == 'S' && $message['rscond6'] == 'S' ) {
+      $content['#items'] = [t('Texto enviado por Cesar')];
     } else {
-      $content['#items'] = [$message['rsmissatges']['missatge']];
+//      $content['#items'] = $params;
+      $content['#items'] = [
+        $message['rscodi'] . ' rscodi',
+        $message['rscond1'] . ' rscond1',
+        $message['rscond2'] . ' rscond2',
+        $message['rscond3'] . ' rscond3',
+        $message['rscond4'] . ' rscond4',
+        $message['rscond5'] . ' rscond5',
+        $message['rscond6'] . ' rscond6',
+        $message['rsresult'] . ' rsresult',
+        $message['rsmissatges'][0]['missatge'],
+      ];
     }
-
+    $title = '';
+    switch ($message['rsresult']) {
+      case 'W':
+        $title = t('Tienes un Warnning');
+        break;
+      case 'C':
+        $title = t('Datos correcto. Solicita una cita previa');
+        break;
+      case 'P':
+        $title = t('Tienes algún pago pendiente');
+        break;
+      case 'E':
+        $title = t('La sepultura no cumple con los requisitos');
+        break;
+    }
     $response->addCommand(new OpenModalDialogCommand(
-      $this->t('Solicitud enviada'),
+      $title,
       $content,
-      ['width' => '500']
+      ['width' => '800']
     ));
 
     return $response;
