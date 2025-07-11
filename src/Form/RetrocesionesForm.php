@@ -628,15 +628,12 @@ class RetrocesionesForm extends ConfigFormBase {
     $end_date = $config->get('end_date');
     $today = date('Y-m-d');
     $form['#attached']['library'][] = 'cementeris_retrocesiones/cementeris_retrocesiones';
-//dump($today);
-//dump($start_date);
-//dump($end_date);
-//dump($today < $start_date);
-//dump($today > $end_date);
-
 
     if ($today >= $start_date && $today <= $end_date) {
-
+      $form['form_title'] = [
+        '#type' => 'markup',
+        '#markup' => '<h2>' . $this->t('Formulario de Retrocesiones') . '</h2>',
+      ];
       $form['#prefix'] = '<div id="retrocesiones-form-wrapper">';
       $form['#suffix'] = '</div>';
       // Group: Grave code
@@ -900,7 +897,6 @@ class RetrocesionesForm extends ConfigFormBase {
           'wrapper'  => 'retrocesiones-form-wrapper',
         ],
       ];
-      $form['#attached']['library'][] = 'core/drupal.dialog.ajax';
     }
     elseif ($today > $end_date) {
       $form['out_of_range'] = [
@@ -915,6 +911,7 @@ class RetrocesionesForm extends ConfigFormBase {
       ];
     }
 
+    $form['#attached']['library'][] = 'core/drupal.dialog.ajax';
     return $form;
   }
 
@@ -958,102 +955,14 @@ class RetrocesionesForm extends ConfigFormBase {
   /**
    * {@inheritdoc}
    */
-  public function submitForm(array &$form, FormStateInterface $form_state): void {
-    $values = $form_state->getValues();
-
-    $cemetery = $values['cemetery'] ?? '';
-    $enclosure = $values['enclosure'] ?? '';
-    $department = $values['department'] ?? '';
-    $way = $values['way'] ?? '';
-    $grouping = $values['grouping'] ?? '';
-    $grave_type = $values['grave_type'] ?? '';
-    $class = $values['class'] ?? '';
-    $number = $values['number'] ?? '';
-    $bis = $values['bis'] ?? '';
-    $floor = $values['floor'] ?? '';
-    $nif = $values['nif'] ?? '';
-    $nombre = $values['nombre'] ?? '';
-    $apellido1 = $values['apellido1'] ?? '';
-    $apellido2 = $values['apellido2'] ?? '';
-    $telefono = $values['telefono'] ?? '';
-    $email = $values['email'] ?? '';
-    $acepta_politica = $values['acepta_politica'] ?? FALSE;
-    $acepta_notificaciones = $values['acepta_notificaciones'] ?? FALSE;
-
-    // CSV path
-//    $file_path = DRUPAL_ROOT . '/' . drupal_get_path('module', 'cementeris_retrocesiones') . '/data/estructura_cementiris.csv';
-    $file_path = \Drupal::service('file_system')->realpath(File::load(\Drupal::config('cementeris_retrocesiones.settings')->get('excel_file_structure_cementeris')[0])->getFileUri());
-
-    $match = null;
-
-    if (file_exists($file_path) && ($handle = fopen($file_path, 'r')) !== FALSE) {
-      $header = fgetcsv($handle, 2000, ',');
-
-      while (($data = fgetcsv($handle, 2000, ',')) !== FALSE) {
-        $row_cemetery = strtoupper(trim($data[1] ?? ''));
-        $row_enclosure = strtoupper(trim($data[4] ?? ''));
-        $row_department = strtoupper(trim($data[7] ?? ''));
-        $row_way = preg_replace('/\s+/', ' ', strtoupper(trim($data[10] ?? '')));
-        $row_grouping = strtoupper(trim($data[13] ?? ''));
-
-        if (
-          $row_cemetery === strtoupper($cemetery) &&
-          $row_enclosure === strtoupper($enclosure) &&
-          $row_department === strtoupper($department) &&
-          $row_way === strtoupper($way) &&
-          $row_grouping === strtoupper($grouping)
-        ) {
-          $match = $data;
-          break;
-        }
-      }
-
-      fclose($handle);
-    }
-
-    if ($match) {
-      $cemetery = $match[0];
-      $enclosure = $match[2];
-      $department = $match[5];
-      $way = $match[8];
-      $grouping = $match[11];
-    }
-//
-//
-//    dump([
-//      'cemetery' => $cemetery,
-//      'enclosure' => $enclosure,
-//      'department' => $department,
-//      'way' => $way,
-//      'grouping' => $grouping,
-//      'grave_type' => $grave_type,
-//      'class' => $class,
-//      'number' => $number,
-//      'bis' => $bis,
-//      'floor' => $floor,
-//      'nif' => $nif,
-//      'nombre' => $nombre,
-//      'apellido1' => $apellido1,
-//      'apellido2' => $apellido2,
-//      'telefono' => $telefono,
-//      'email' => $email,
-//      'acepta_politica' => $acepta_politica,
-//      'acepta_notificaciones' => $acepta_notificaciones,
-//    ]);
-//    die();
-  }
   public function ajaxSubmitCallback(array &$form, FormStateInterface $form_state): AjaxResponse {
     $response = new AjaxResponse();
 
-    // 1) Si hay errores de validación, devolvemos el formulario actualizado.
+    // Si hay errores de validación, devolvemos el formulario actualizado.
     if ($form_state->getErrors()) {
-      $response->addCommand(new ReplaceCommand(
-        '#retrocesiones-form-wrapper',   // ← el wrapper de tu formulario
-        $form
-      ));
+      $response->addCommand(new ReplaceCommand('#retrocesiones-form-wrapper', $form));
       return $response;
     }
-
     $values = $form_state->getValues();
 
     $cemetery = $values['cemetery'] ?? '';
@@ -1075,11 +984,12 @@ class RetrocesionesForm extends ConfigFormBase {
     $acepta_politica = $values['acepta_politica'] ?? FALSE;
     $acepta_notificaciones = $values['acepta_notificaciones'] ?? FALSE;
 
-    // CSV path
-//    $file_path = DRUPAL_ROOT . '/' . drupal_get_path('module', 'cementeris_retrocesiones') . '/data/estructura_cementiris.csv';
-    $file_path = \Drupal::service('file_system')->realpath(File::load(\Drupal::config('cementeris_retrocesiones.settings')->get('excel_file_structure_cementeris')[0])->getFileUri());
+    // Pass the codes from csv to array
+    $file_path = \Drupal::service('file_system')
+      ->realpath(File::load(\Drupal::config('cementeris_retrocesiones.settings')
+        ->get('excel_file_structure_cementeris')[0])->getFileUri());
 
-    $match = null;
+    $match = NULL;
 
     if (file_exists($file_path) && ($handle = fopen($file_path, 'r')) !== FALSE) {
       $header = fgetcsv($handle, 2000, ',');
@@ -1091,13 +1001,11 @@ class RetrocesionesForm extends ConfigFormBase {
         $row_way = preg_replace('/\s+/', ' ', strtoupper(trim($data[10] ?? '')));
         $row_grouping = strtoupper(trim($data[13] ?? ''));
 
-        if (
-          $row_cemetery === strtoupper($cemetery) &&
+        if ($row_cemetery === strtoupper($cemetery) &&
           $row_enclosure === strtoupper($enclosure) &&
           $row_department === strtoupper($department) &&
           $row_way === strtoupper($way) &&
-          $row_grouping === strtoupper($grouping)
-        ) {
+          $row_grouping === strtoupper($grouping)) {
           $match = $data;
           break;
         }
@@ -1113,35 +1021,73 @@ class RetrocesionesForm extends ConfigFormBase {
       $way = $match[8];
       $grouping = $match[11];
     }
-    // TODO HERE WE CALL SERVICES
 
-    $content = [
-      '#theme' => 'item_list',
-      '#items' => [
-        $this->t('Cementerio: @v',   ['@v' => $cemetery       ?: '-']),
-        $this->t('Recinto: @v',      ['@v' => $enclosure      ?: '-']),
-        $this->t('Departamento: @v', ['@v' => $department     ?: '-']),
-        $this->t('Vía: @v',          ['@v' => $way            ?: '-']),
-        $this->t('Agrupación: @v',   ['@v' => $grouping       ?: '-']),
-        $this->t('Tipo sepultura: @v',['@v' => $grave_type    ?: '-']),
-        $this->t('Clase: @v',        ['@v' => $class          ?: '-']),
-        $this->t('Número: @v',       ['@v' => $number         ?: '-']),
-        $this->t('Bis: @v',          ['@v' => $bis ? $si : $no]),
-        $this->t('Piso: @v',         ['@v' => $floor          ?: '-']),
-        $this->t('NIF: @v',          ['@v' => $nif            ?: '-']),
-        $this->t('Titular: @v',      ['@v' => $nombre . ' ' . $apellido1 . ' ' . $apellido2]),
-        $this->t('Teléfono: @v',     ['@v' => $telefono       ?: '-']),
-        $this->t('Email: @v',        ['@v' => $email          ?: '-']),
-        $this->t('Acepta política: @v',       ['@v' => (int) $acepta_politica]),
-        $this->t('Acepta notificaciones: @v', ['@v' => (int) $acepta_notificaciones]),
-      ],
+    $params = [
+      'rscement' => $cemetery,
+      'rsnivel1' => $enclosure,
+      'rsnivel2' => $department,
+      'rsnivel3' => $way,
+      'rsnivel4' => $grouping,
+      'rstipsep' => $values['grave_type'] ?? '',
+      'rsclasep' => $values['class'] ?? '',
+      'rsnumsep' => $values['number'] ?? '',
+      'rsbissep' => $values['bis'] == 0 ? '' : $values['bis'],
+      'rspissep' => $values['floor'] ?? '',
+      'rstitnif' => $values['nif'] ?? '',
+      'rstitnom' => $values['nombre'] ?? '',
+      'rstitcog1' => $values['apellido1'] ?? '',
+      'rstitcog2' => $values['apellido2'] ?? '',
+      'rstittelef' => $values['telefono'] ?? '',
+      'rstitemail' => $values['email'] ?? '',
+      'rsrgpd' => $values['acepta_politica'] ?? 1,
+      'rsconsentiment' => $values['acepta_notificaciones'] ?? 1,
     ];
-    // TODO $CONTENT MUST CONTAIN SERVICE RESPONSE MESSAGE
 
+    $service = \Drupal::service('cementeris_retrocesiones.services');
+    $message = $service->postCementiris($params);
+
+    $content['#theme'] = 'item_list';
+
+    if ($message['rscond1'] == 'S' && $message['rscond2'] == 'S' && $message['rscond3'] == 'S' &&
+          $message['rscond4'] == 'S' && $message['rscond5'] == 'S' && $message['rscond6'] == 'S' ) {
+      $content['#items'] = [t('Texto enviado por Cesar')];
+    } else {
+//      $content['#items'] = $params;
+      $content['#items'] = [
+        $message['rscodi'] . ' rscodi',
+        $message['rscond1'] . ' rscond1',
+        $message['rscond2'] . ' rscond2',
+        $message['rscond3'] . ' rscond3',
+        $message['rscond4'] . ' rscond4',
+        $message['rscond5'] . ' rscond5',
+        $message['rscond6'] . ' rscond6',
+        $message['rsresult'] . ' rsresult',
+        $message['rsmissatges'][0]['missatge'],
+      ];
+    }
+    $title = '';
+    switch ($message['rsresult']) {
+      case 'W':
+        $title = t('Tienes un Warnning');
+        break;
+      case 'C':
+        $title = t('Datos correcto. Solicita una cita previa');
+        break;
+      case 'P':
+        $title = t('Tienes algún pago pendiente');
+        break;
+      case 'E':
+        $title = t('La sepultura no cumple con los requisitos');
+        break;
+    }
     $response->addCommand(new OpenModalDialogCommand(
-      $this->t('Request sent'),
+      $title,
       $content,
-      ['width' => '500']
+      [
+        'width' => 500,
+        'height' => 400,
+        'dialogClass' => 'retrocesions-modal'
+      ]
     ));
 
     return $response;
